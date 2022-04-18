@@ -7,7 +7,7 @@
       <h1 class="d-none d-md-inline">CineForum</h1>
     </div>
     <div class="d-flex flex-row align-items-center">
-      <i class="fas fa-bell fa-2x me-3"></i>
+      <i v-if="auth.userLogged" class="fas fa-bell fa-2x me-3"></i>
       <div v-if="auth.userLogged" class="user">
         <i class="fas fa-user fa-2x"></i>
       </div>
