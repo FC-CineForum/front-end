@@ -19,8 +19,7 @@
 </template>
 
 <script setup>
-import ClapperBoard from "../components/icons/solid/ClapperBoard.vue";
-import { defineProps } from "vue";
+import ClapperBoard from "../components/icons/solids/ClapperBoard.vue";
 
 defineProps({
   movie: {
