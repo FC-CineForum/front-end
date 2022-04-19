@@ -10,4 +10,17 @@ import Header from "./components/Header.vue";
 
 <style>
 @import "@/assets/base.css";
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+a:hover {
+  color: inherit;
+}
+
+input:focus {
+  outline: none;
+}
 </style>
