@@ -29,7 +29,7 @@
       </CustomButton>
       <p class="my-3">¿No tienes cuenta?</p>
       <CustomButton class="rounded fw-bold fs-3 px-4">
-        Registrate
+        <router-link class="text-white" to="/register">Registrate</router-link>
       </CustomButton>
     </div>
   </div>
