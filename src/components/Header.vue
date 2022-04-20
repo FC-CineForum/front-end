@@ -13,15 +13,16 @@
       <div v-if="auth.userLogged" class="user">
         <i class="fas fa-user fa-2x"></i>
       </div>
-      <button v-else class="rounded-pill fw-bold">
+      <CustomButton v-else class="rounded-pill fw-bold">
         <router-link to="/login">Inicia Sesión</router-link>
-      </button>
+      </CustomButton>
     </div>
   </div>
 </template>
 
 <script setup>
 import IdentityLogo from "@/components/icons/IdentityLogo.vue";
+import CustomButton from "./forms/CustomButton.vue";
 import { useAuthStore } from "@/stores/auth.js";
 
 const auth = useAuthStore();
@@ -35,13 +36,6 @@ div {
 h1 {
   margin: 0;
   text-shadow: 3px 0 0px var(--cf-highlight);
-}
-
-button {
-  padding: 10px;
-  border: none;
-  color: white;
-  background: var(--color-background-main);
 }
 
 svg {
