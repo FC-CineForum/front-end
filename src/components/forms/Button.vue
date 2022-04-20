@@ -1,7 +1,8 @@
+/* eslint-disable vue/multi-word-component-names */
 <template>
-    <button>
-        <slot />   
-    </button>
+  <button>
+    <slot />
+  </button>
 </template>
 
 <style scoped>
