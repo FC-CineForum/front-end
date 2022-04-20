@@ -3,7 +3,7 @@
     class="header d-flex flex-row justify-content-between align-items-center px-3"
   >
     <div class="d-flex flex-row align-items-center">
-      <IdentityLogo class="me-3" />
+      <IdentityLogo class="me-3 pointer" @click="router.push({name:'home'})" />
       <router-link to="/">
         <h1 class="d-none d-md-inline">CineForum</h1>
       </router-link>
@@ -22,10 +22,13 @@
 
 <script setup>
 import IdentityLogo from "@/components/icons/IdentityLogo.vue";
-import CustomButton from "./forms/CustomButton.vue";
+import CustomButton from "./forms/Button.vue";
+import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth.js";
 
 const auth = useAuthStore();
+
+const router = useRouter();
 </script>
 
 <style scoped>
