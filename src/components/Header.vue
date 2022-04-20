@@ -3,7 +3,10 @@
     class="header d-flex flex-row justify-content-between align-items-center px-3"
   >
     <div class="d-flex flex-row align-items-center">
-      <IdentityLogo class="me-3 pointer" @click="router.push({name:'home'})" />
+      <IdentityLogo
+        class="me-3 pointer"
+        @click="router.push({ name: 'home' })"
+      />
       <router-link to="/">
         <h1 class="d-none d-md-inline">CineForum</h1>
       </router-link>

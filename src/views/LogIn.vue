@@ -2,11 +2,11 @@
   <div class="p-5">
     <div class="d-flex flex-row border-bottom border-dark">
       <i class="fas fa-envelope fa-3x me-2"></i>
-      <InputCustom v-model:value="user" placeholder="Correo o Usuario" />
+      <CustomInput v-model:value="user" placeholder="Correo o Usuario" />
     </div>
     <div class="d-flex flex-row border-bottom border-dark mt-5">
       <i class="fas fa-lock fa-3x me-2"></i>
-      <InputCustom
+      <CustomInput
         v-model:value="password"
         placeholder="Contraseña"
         type="password"
@@ -14,20 +14,35 @@
     </div>
     <div class="d-flex flex-row justify-content-between mt-3">
       <div class="d-flex flex-row align-items-center">
-        <input type="checkbox" class="me-2" />
+        <input type="checkbox" class="me-2" v-model="remember" />
         <p>Recordame</p>
       </div>
       <router-link to="/">¿Olvidaste tu contraseña?</router-link>
+    </div>
+    <div
+      class="d-flex flex-column justify-content-center align-items-center mt-3"
+    >
+      <CustomButton class="rounded fw-bold fs-3">
+        Inicio de Sesión
+      </CustomButton>
+      <p class="my-3">¿No tienes cuenta?</p>
+      <CustomButton class="rounded fw-bold fs-3 px-4">
+        Registrate
+      </CustomButton>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import InputCustom from "../components/forms/CustomInput.vue";
+import CustomInput from "../components/forms/Input.vue";
+import CustomButton from "../components/forms/Button.vue";
 
 const user = ref("");
+
 const password = ref("");
+
+const remember = ref(false);
 </script>
 
 <style scoped>

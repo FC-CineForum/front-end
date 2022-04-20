@@ -23,4 +23,8 @@ a:hover {
 input:focus {
   outline: none;
 }
+
+.pointer {
+  cursor: pointer;
+}
 </style>
