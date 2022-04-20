@@ -12,7 +12,9 @@
         type="password"
       />
     </div>
-    <div class="d-flex flex-row justify-content-between align-items-center mt-3">
+    <div
+      class="d-flex flex-row justify-content-between align-items-center mt-3"
+    >
       <div class="d-flex flex-row align-items-center">
         <input type="checkbox" class="me-2" v-model="remember" />
         <p>Recordame</p>
@@ -71,20 +73,18 @@ p {
   font-size: 24px;
 }
 
-@media (max-width:575.98px){
+@media (max-width: 575.98px) {
+  a {
+    font-size: 12px;
+  }
 
-a {
-  font-size: 12px;
-}
+  input {
+    font-size: 24px;
+  }
 
-input {
-  font-size: 24px;
-}
-
-p {
-  margin: 0;
-  font-size: 12px;
-}
-
+  p {
+    margin: 0;
+    font-size: 12px;
+  }
 }
 </style>
