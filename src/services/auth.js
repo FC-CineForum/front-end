@@ -15,7 +15,8 @@ export default {
 
   async register(user) {
     try {
-      const data = apiClient.post("/authRoute/signUp", { user });
+      const data = await  apiClient.post("/cineforum/signUp", { user });
+      console.log(data);
       return data;
     } catch (err) {
       //Probably a 500

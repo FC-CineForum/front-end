@@ -4,12 +4,12 @@
       <div
         class="col-md-5 d-flex flex-row align-items-center border-bottom border-dark"
       >
-        <CustomInput v-model:value="user" placeholder="Usuario" />
+        <CustomInput v-model:value="username" placeholder="Usuario" />
       </div>
       <div
         class="col-md-5 d-flex flex-row align-items-center border-bottom border-dark"
       >
-        <CustomInput v-model:value="mail" placeholder="Correo" />
+        <CustomInput v-model:value="email" placeholder="Correo" />
       </div>
     </div>
     <div class="row d-flex flex-row justify-content-around">
@@ -56,7 +56,9 @@
   <div
     class="d-flex flex-column justify-content-center align-items-center mt-3"
   >
-    <CustomButton class="rounded fw-bold fs-3 px-4"> Registrate </CustomButton>
+    <CustomButton class="rounded fw-bold fs-3 px-4" @click="signUser">
+      Registrate
+    </CustomButton>
     <p class="my-3">¿Ya tienes cuenta?</p>
     <CustomButton class="rounded fw-bold fs-3">
       <router-link class="text-white" to="/login">Inicia Sesión</router-link>
@@ -65,18 +67,24 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth.js";
 import CountrySelector from "@/components/forms/CountrySelector.vue";
 import CustomInput from "@/components/forms/Input.vue";
 import CustomButton from "@/components/forms/Button.vue";
 
-const user = ref("");
+const router = useRouter();
+
+const auth = useAuthStore();
+
+const username = ref("");
 
 const name = ref("");
 
 const lastName = ref("");
 
-const mail = ref("");
+const email = ref("");
 
 const password = ref("");
 
@@ -87,6 +95,29 @@ const remember = ref(false);
 const birthDate = ref("");
 
 const country = ref("");
+
+const user = computed(() => {
+  return {
+    username,
+    name,
+    lastName,
+    email,
+    password,
+    birthDate,
+    country,
+    avatar: "",
+    isPublic: true,
+  };
+});
+
+const signUser = async () => {
+  try {
+    await auth.signUp(remember, user);
+    router.push("/");
+  } catch (error) {
+    alert(error);
+  }
+};
 </script>
 
 <style scoped>
