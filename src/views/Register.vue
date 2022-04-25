@@ -4,7 +4,7 @@
       <div
         class="col-md-5 d-flex flex-row align-items-center border-bottom border-dark"
       >
-        <CustomInput v-model:value="username" placeholder="Usuario" />
+        <CustomInput v-model:value="userName" placeholder="Usuario" />
       </div>
       <div
         class="col-md-5 d-flex flex-row align-items-center border-bottom border-dark"
@@ -78,7 +78,7 @@ const router = useRouter();
 
 const auth = useAuthStore();
 
-const username = ref("");
+const userName = ref("");
 
 const name = ref("");
 
@@ -98,7 +98,7 @@ const country = ref("");
 
 const user = computed(() => {
   return {
-    username,
+    userName,
     name,
     lastName,
     email,
@@ -112,10 +112,9 @@ const user = computed(() => {
 
 const signUser = async () => {
   try {
-    await auth.signUp(remember, user);
     router.push("/");
-  } catch (error) {
-    alert(error);
+  } catch (err) {
+    alert(err);
   }
 };
 </script>
