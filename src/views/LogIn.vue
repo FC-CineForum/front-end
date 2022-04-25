@@ -40,7 +40,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
-import { useAuthStore } from "@/store/auth.js";
+import { useAuthStore } from "@/stores/auth.js";
 import CustomInput from "../components/forms/Input.vue";
 import CustomButton from "../components/forms/Button.vue";
 
