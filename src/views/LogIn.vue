@@ -2,7 +2,7 @@
   <div class="p-5">
     <div class="d-flex flex-row align-items-center border-bottom border-dark">
       <i class="fas fa-envelope fs-1 me-2"></i>
-      <CustomInput v-model:value="user" placeholder="Correo o Usuario" />
+      <CustomInput v-model:value="userName" placeholder="Correo o Usuario" />
     </div>
     <div
       class="d-flex flex-row align-items-center border-bottom border-dark mt-5"
@@ -38,15 +38,37 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/store/auth.js";
 import CustomInput from "../components/forms/Input.vue";
 import CustomButton from "../components/forms/Button.vue";
 
-const user = ref("");
+const router = useRouter();
+
+const auth = useAuthStore();
+
+const userName = ref("");
 
 const password = ref("");
 
 const remember = ref(false);
+
+const user = computed(()=>{
+  return {
+    userName, password
+  }
+});
+
+const logUser = async ()=>{
+  try{
+    await auth.logIn(user);
+    router.push("/");
+  }catch(err){
+    alert(err)
+  }
+  
+}
 </script>
 
 <style scoped>
