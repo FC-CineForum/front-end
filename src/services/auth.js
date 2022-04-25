@@ -11,7 +11,7 @@ const apiClient = axios.create({
 });
 
 export default {
-  async login(user) {
+  async logIn(user) {
     try {
       const data = await apiClient.post("/cineforum/logIn", { user });
       return data;
