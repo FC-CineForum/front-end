@@ -26,7 +26,7 @@
     <div
       class="d-flex flex-column justify-content-center align-items-center mt-3"
     >
-      <CustomButton class="rounded fw-bold fs-3">
+      <CustomButton class="rounded fw-bold fs-3" @click="logUser">
         Inicio de Sesión
       </CustomButton>
       <p class="my-3">¿No tienes cuenta?</p>
@@ -54,21 +54,21 @@ const password = ref("");
 
 const remember = ref(false);
 
-const user = computed(()=>{
+const user = computed(() => {
   return {
-    userName, password
-  }
+    userName,
+    password,
+  };
 });
 
-const logUser = async ()=>{
-  try{
+const logUser = async () => {
+  try {
     await auth.logIn(user);
     router.push("/");
-  }catch(err){
-    alert(err)
+  } catch (err) {
+    alert(err);
   }
-  
-}
+};
 </script>
 
 <style scoped>

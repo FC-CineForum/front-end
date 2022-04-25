@@ -12,10 +12,10 @@ const apiClient = axios.create({
 
 export default {
   async login(user) {
-    try{
-      const data = await apiClient.post("/cineforum/logIn");
+    try {
+      const data = await apiClient.post("/cineforum/logIn", { user });
       return data;
-    }catch(err){
+    } catch (err) {
       //Probably a 500
       if (!err.response) {
         throw new Error("Hubo un error, intentelo más tarde");
@@ -24,18 +24,17 @@ export default {
       if (err.response.status === 401) {
         throw new Error("El correo electrónico no es valido");
       }
-      if(err.response.status === 400){
-        throw new Error("Falta contraseña y/o correo")
+      if (err.response.status === 400) {
+        throw new Error("Falta contraseña y/o correo");
       }
       // Probably a 500
       throw new Error("Ha ocurrido un error, intentelo más tarde");
-    }
     }
   },
 
   async register(user) {
     try {
-      const data = await  apiClient.post("/cineforum/signUp", { user });
+      const data = await apiClient.post("/cineforum/signUp", { user });
       console.log(data);
       return data;
     } catch (err) {
