@@ -4,7 +4,7 @@
       <div
         class="col-md-5 d-flex flex-row align-items-center border-bottom border-dark"
       >
-        <CustomInput v-model:value="userName" placeholder="Usuario" />
+        <CustomInput v-model:value="username" placeholder="Usuario" />
       </div>
       <div
         class="col-md-5 d-flex flex-row align-items-center border-bottom border-dark"
@@ -49,10 +49,6 @@
       </div>
     </div>
   </div>
-  <div class="d-flex flex-row align-items-center ms-5">
-    <input type="checkbox" class="me-2" v-model="remember" />
-    <p>Recordame</p>
-  </div>
   <div
     class="d-flex flex-column justify-content-center align-items-center mt-3"
   >
@@ -69,16 +65,15 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
-import { useAuthStore } from "@/stores/auth.js";
+import authServices from "@/services/auth.js";
 import CountrySelector from "@/components/forms/CountrySelector.vue";
 import CustomInput from "@/components/forms/Input.vue";
 import CustomButton from "@/components/forms/Button.vue";
+import auth from "../services/auth";
 
 const router = useRouter();
 
-const auth = useAuthStore();
-
-const userName = ref("");
+const username = ref("");
 
 const name = ref("");
 
@@ -90,15 +85,13 @@ const password = ref("");
 
 const passwordConfirm = ref("");
 
-const remember = ref(false);
-
 const birthDate = ref("");
 
 const country = ref("");
 
 const user = computed(() => {
   return {
-    userName,
+    username,
     name,
     lastName,
     email,
@@ -112,7 +105,9 @@ const user = computed(() => {
 
 const signUser = async () => {
   try {
+    authServices.register(user);
     router.push("/");
+    alert("Debes validar tu correo electrónico");
   } catch (err) {
     alert(err);
   }
