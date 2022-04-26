@@ -1,19 +1,24 @@
-import axios from "axios";
+import axios from "redaxios";
 
-const apiClient = axios.create({
-  baseUrl: import.meta.env.VITE_CF_API_URL,
-  withCredentials: false, // This is the default
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  },
-  timeout: 10000,
-});
+// const apiClient = axios.create({
+//   baseUrl: import.meta.env.VITE_API_URL,
+//   withCredentials: false, // This is the default
+//   headers: {
+//     Accept: "application/json",
+//     "Content-Type": "application/json",
+//   },
+//   timeout: 10000,
+// });
 
 export default {
-  async logIn(user) {
+  async login(user) {
     try {
-      const data = await apiClient.post("/cineforum/logIn", { user });
+      const { data } = await axios.post(
+        "http://localhost:3000/cineforum/logIn",
+        {
+          ...user,
+        }
+      );
       return data;
     } catch (err) {
       //Probably a 500
@@ -34,8 +39,9 @@ export default {
 
   async register(user) {
     try {
-      const data = await apiClient.post("/cineforum/signUp", { user });
-      console.log(data);
+      const data = await axios.post("http://localhost:3000/cineforum/signUp", {
+        ...user,
+      });
       return data;
     } catch (err) {
       //Probably a 500

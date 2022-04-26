@@ -1,11 +1,13 @@
 <template>
   <div class="p-5">
-    <div class="d-flex flex-row align-items-center border-bottom border-dark">
+    <div
+      class="d-flex flex-row align-items-center border-bottom border-dark mx-md-5"
+    >
       <i class="fas fa-envelope fs-1 me-2"></i>
       <CustomInput v-model:value="userName" placeholder="Correo o Usuario" />
     </div>
     <div
-      class="d-flex flex-row align-items-center border-bottom border-dark mt-5"
+      class="d-flex flex-row align-items-center border-bottom border-dark mt-md-5 mx-md-5"
     >
       <i class="fas fa-lock fs-1 me-2"></i>
       <CustomInput
@@ -56,14 +58,14 @@ const remember = ref(false);
 
 const user = computed(() => {
   return {
-    userName,
-    password,
+    email: userName.value,
+    password: password.value,
   };
 });
 
 const logUser = async () => {
   try {
-    await auth.logIn(user);
+    await auth.logIn(remember, user.value);
     router.push("/");
   } catch (err) {
     alert(err);

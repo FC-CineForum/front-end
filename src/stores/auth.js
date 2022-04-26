@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import authService from "@/services/auth.js";
+import authServices from "@/services/auth.js";
 
 export const useAuthStore = defineStore({
   id: "auth",
@@ -13,13 +13,17 @@ export const useAuthStore = defineStore({
   },
   actions: {
     async logIn(remember, user) {
-      const { avatar, accessToken } = authService.logIn(user);
-      this.user = avatar;
-      this.token = accessToken;
-      if (remember) {
-        sessionStorage.setItem("token", this.token);
-      } else {
-        localStorage.setItem("token", this.token);
+      try {
+        const { avatar, token } = await authServices.login(user);
+        this.user = avatar;
+        this.token = token;
+        if (remember) {
+          sessionStorage.setItem("token", this.token);
+        } else {
+          localStorage.setItem("token", this.token);
+        }
+      } catch (err) {
+        throw new Error(err);
       }
     },
   },
