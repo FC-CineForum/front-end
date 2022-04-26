@@ -1,6 +1,7 @@
 <script setup>
 import { reactive } from "vue";
 import Entry from "../components/Entry.vue";
+import Header from "@/components/Header.vue"
 const movie = reactive({
   title: "The Batman",
   rating: 4.2,
@@ -10,6 +11,7 @@ const movie = reactive({
 </script>
 
 <template>
+  <Header />
   <h1>Nuevas Entradas</h1>
   <div class="container-fluid d-flex flex-row justify-start">
     <Entry :movie="movie" />
