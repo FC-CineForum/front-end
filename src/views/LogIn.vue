@@ -1,11 +1,13 @@
 <template>
   <div class="p-5">
-    <div class="d-flex flex-row align-items-center border-bottom border-dark">
+    <div
+      class="d-flex flex-row align-items-center border-bottom border-dark mx-md-5"
+    >
       <i class="fas fa-envelope fs-1 me-2"></i>
-      <CustomInput v-model:value="user" placeholder="Correo o Usuario" />
+      <CustomInput v-model:value="userName" placeholder="Correo o Usuario" />
     </div>
     <div
-      class="d-flex flex-row align-items-center border-bottom border-dark mt-5"
+      class="d-flex flex-row align-items-center border-bottom border-dark mt-md-5 mx-md-5"
     >
       <i class="fas fa-lock fs-1 me-2"></i>
       <CustomInput
@@ -26,7 +28,7 @@
     <div
       class="d-flex flex-column justify-content-center align-items-center mt-3"
     >
-      <CustomButton class="rounded fw-bold fs-3">
+      <CustomButton class="rounded fw-bold fs-3" @click="logUser">
         Inicio de Sesión
       </CustomButton>
       <p class="my-3">¿No tienes cuenta?</p>
@@ -38,15 +40,37 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth.js";
 import CustomInput from "../components/forms/Input.vue";
 import CustomButton from "../components/forms/Button.vue";
 
-const user = ref("");
+const router = useRouter();
+
+const auth = useAuthStore();
+
+const userName = ref("");
 
 const password = ref("");
 
 const remember = ref(false);
+
+const user = computed(() => {
+  return {
+    email: userName.value,
+    password: password.value,
+  };
+});
+
+const logUser = async () => {
+  try {
+    await auth.logIn(remember, user.value);
+    router.push("/");
+  } catch (err) {
+    alert(err);
+  }
+};
 </script>
 
 <style scoped>
