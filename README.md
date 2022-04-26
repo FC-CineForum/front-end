@@ -36,9 +36,9 @@ npm run lint
 
 ## Using the Dockerfile
 ```sh
-$ docker build -t cineforum .
+docker build -t cineforum .
 ```
 
 ```sh
-$ docker run -it -p 8080:8080 cineforum
+docker run -it -p 8080:8080 cineforum
 ```
