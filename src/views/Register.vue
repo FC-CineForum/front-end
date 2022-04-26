@@ -1,4 +1,5 @@
 <template>
+  <Header />
   <div class="p-5">
     <div class="row d-flex flex-row justify-content-around">
       <div
@@ -66,6 +67,7 @@
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import authServices from "@/services/auth.js";
+import Header from "@/components/Header.vue";
 import CountrySelector from "@/components/forms/CountrySelector.vue";
 import CustomInput from "@/components/forms/Input.vue";
 import CustomButton from "@/components/forms/Button.vue";

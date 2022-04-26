@@ -1,4 +1,5 @@
 <template>
+  <Header />
   <div class="p-5">
     <div
       class="d-flex flex-row align-items-center border-bottom border-dark mx-md-5"
@@ -43,6 +44,7 @@
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth.js";
+import Header from "@/components/Header.vue"
 import CustomInput from "../components/forms/Input.vue";
 import CustomButton from "../components/forms/Button.vue";
 
