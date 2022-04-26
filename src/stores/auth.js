@@ -13,14 +13,14 @@ export const useAuthStore = defineStore({
   },
   actions: {
     async logIn(remember, user) {
-        const { avatar, token } = await authServices.login(user);
-        this.user = avatar;
-        this.token = token;
-        if (remember) {
-          sessionStorage.setItem("token", this.token);
-        } else {
-          localStorage.setItem("token", this.token);
-        }
+      const { avatar, token } = await authServices.login(user);
+      this.user = avatar;
+      this.token = token;
+      if (remember) {
+        sessionStorage.setItem("token", this.token);
+      } else {
+        localStorage.setItem("token", this.token);
+      }
     },
   },
 });

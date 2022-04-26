@@ -69,7 +69,6 @@ import authServices from "@/services/auth.js";
 import CountrySelector from "@/components/forms/CountrySelector.vue";
 import CustomInput from "@/components/forms/Input.vue";
 import CustomButton from "@/components/forms/Button.vue";
-import auth from "../services/auth";
 
 const router = useRouter();
 
