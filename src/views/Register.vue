@@ -104,7 +104,7 @@ const user = computed(() => {
 
 const signUser = async () => {
   try {
-    authServices.register(user);
+    await authServices.register(user);
     router.push("/");
     alert("Debes validar tu correo electrónico");
   } catch (err) {

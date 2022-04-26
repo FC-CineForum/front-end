@@ -22,15 +22,12 @@ export default {
       return data;
     } catch (err) {
       //Probably a 500
-      if (!err.response) {
+      if (!err.data) {
         throw new Error("Hubo un error, intentelo más tarde");
       }
       // Bad Request
-      if (err.response.status === 401) {
-        throw new Error("El correo electrónico no es valido");
-      }
-      if (err.response.status === 400) {
-        throw new Error("Falta contraseña y/o correo");
+      if (err.status === 401) {
+        throw new Error("El correo o contraseña no es valido");
       }
       // Probably a 500
       throw new Error("Ha ocurrido un error, intentelo más tarde");
@@ -44,11 +41,11 @@ export default {
       });
     } catch (err) {
       //Probably a 500
-      if (!err.response) {
+      if (!err.data) {
         throw new Error("Hubo un error, intentelo más tarde");
       }
       // Bad Request
-      if (err.response.status === 401) {
+      if (err.status === 401) {
         const message = err.response.data.error;
         if (message.includes("email is already taken")) {
           throw new Error("El correo electrónico no es valido");
