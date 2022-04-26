@@ -13,9 +13,12 @@ import axios from "redaxios";
 export default {
   async login(user) {
     try {
-      const { data }    = await axios.post("http://localhost:3000/cineforum/logIn", {
-        ...user,
-      });
+      const { data } = await axios.post(
+        "http://localhost:3000/cineforum/logIn",
+        {
+          ...user,
+        }
+      );
       return data;
     } catch (err) {
       //Probably a 500
