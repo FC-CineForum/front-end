@@ -13,7 +13,6 @@ export const useAuthStore = defineStore({
   },
   actions: {
     async logIn(remember, user) {
-      try {
         const { avatar, token } = await authServices.login(user);
         this.user = avatar;
         this.token = token;
@@ -22,9 +21,6 @@ export const useAuthStore = defineStore({
         } else {
           localStorage.setItem("token", this.token);
         }
-      } catch (err) {
-        throw new Error(err);
-      }
     },
   },
 });
