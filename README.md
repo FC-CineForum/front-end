@@ -33,3 +33,12 @@ npm run build
 ```sh
 npm run lint
 ```
+
+## Using the Dockerfile
+```sh
+$ docker build -t cineforum .
+```
+
+```sh
+$ docker run -it -p 8080:8080 cineforum
+```
