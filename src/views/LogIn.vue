@@ -44,7 +44,7 @@
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth.js";
-import Header from "@/components/Header.vue"
+import Header from "@/components/Header.vue";
 import CustomInput from "../components/forms/Input.vue";
 import CustomButton from "../components/forms/Button.vue";
 

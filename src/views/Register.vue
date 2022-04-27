@@ -90,23 +90,28 @@ const birthDate = ref("");
 
 const country = ref("");
 
+const birthDateFormatted = computed(() => {
+  const info = birthDate.value.split("-");
+  return `${info[2]}/${info[1]}/${info[0]}`;
+});
+
 const user = computed(() => {
   return {
-    username,
-    name,
-    lastName,
-    email,
-    password,
-    birthDate,
-    country,
-    avatar: "",
+    username: username.value,
+    name: name.value,
+    lastName: lastName.value,
+    email: email.value,
+    password: password.value,
+    birthDate: birthDateFormatted.value,
+    country: country.value,
+    avatar: "any_link",
     isPublic: true,
   };
 });
 
 const signUser = async () => {
   try {
-    await authServices.register(user);
+    await authServices.register(user.value);
     router.push("/");
     alert("Debes validar tu correo electrónico");
   } catch (err) {
