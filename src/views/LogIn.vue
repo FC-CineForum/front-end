@@ -23,7 +23,7 @@
         type="password"
       />
     </div>
-    <p v-if="v$.password  .$error" class="text-danger text-center">
+    <p v-if="v$.password.$error" class="text-danger text-center">
       Es requerida el contraseña
     </p>
     <div
