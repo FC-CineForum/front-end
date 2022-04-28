@@ -18,9 +18,9 @@ const routes = [
     component: () => import("../views/Register.vue"),
   },
   {
-    path: "/validate/email/:token",
+    path: "/verifyAccount",
     name: "validation",
-    component: () => import("../views/Validate.vue"),
+    component: () => import("../views/Verify.vue"),
     meta: { removeHeader: true },
   },
   // {

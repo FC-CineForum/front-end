@@ -15,5 +15,29 @@
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import authServices from "@/services/auth.js";
+import { onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+
+const router = useRouter();
+
+const route = useRoute();
+
+onMounted(async ()=>{
+  try {
+    console.log(route.query.token);
+    await authServices.verifyAccount(route.query.token)
+    router.push("/login")
+  } catch (err) {
+    alert(err)
+    router.push("/")
+  }
+})
+
+const validateAccount = async() =>{
+  
+}
+
+</script>
 <style></style>
