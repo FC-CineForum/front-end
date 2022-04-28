@@ -5,18 +5,27 @@
       class="d-flex flex-row align-items-center border-bottom border-dark mx-md-5"
     >
       <i class="fas fa-envelope fs-1 me-2"></i>
-      <CustomInput v-model:value="userName" placeholder="Correo o Usuario" />
+      <CustomInput
+        v-model:value="state.username"
+        placeholder="Correo o Usuario"
+      />
     </div>
+    <p v-if="v$.username.$error" class="text-danger text-center">
+      Es requerido el correo electrónico
+    </p>
     <div
       class="d-flex flex-row align-items-center border-bottom border-dark mt-md-5 mx-md-5"
     >
       <i class="fas fa-lock fs-1 me-2"></i>
       <CustomInput
-        v-model:value="password"
+        v-model:value="state.password"
         placeholder="Contraseña"
         type="password"
       />
     </div>
+    <p v-if="v$.password.$error" class="text-danger text-center">
+      Es requerida el contraseña
+    </p>
     <div
       class="d-flex flex-row justify-content-between align-items-center mt-3"
     >
@@ -41,9 +50,11 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth.js";
+import useValidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 import Header from "@/components/Header.vue";
 import CustomInput from "../components/forms/Input.vue";
 import CustomButton from "../components/forms/Button.vue";
@@ -52,20 +63,32 @@ const router = useRouter();
 
 const auth = useAuthStore();
 
-const userName = ref("");
-
-const password = ref("");
+const state = reactive({
+  username: "",
+  password: "",
+});
 
 const remember = ref(false);
 
 const user = computed(() => {
   return {
-    email: userName.value,
-    password: password.value,
+    email: state.username,
+    password: state.password,
   };
 });
 
+const rules = computed(() => {
+  return { username: { required }, password: { required } };
+});
+
+const v$ = useValidate(rules, state);
+
 const logUser = async () => {
+  await v$.value.$validate();
+  if (v$.value.$error) {
+    alert("Revisa los errores e intentalo de nuevo");
+    return;
+  }
   try {
     await auth.logIn(remember, user.value);
     router.push("/");

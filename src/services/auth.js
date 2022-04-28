@@ -54,5 +54,5 @@ export default {
       // Probably a 500
       throw new Error("Ha ocurrido un error, intentelo más tarde");
     }
-  },
+  }
 };
