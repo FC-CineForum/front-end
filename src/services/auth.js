@@ -74,7 +74,9 @@ export default {
       if (err.status === 401) {
         throw new Error("El token ha expirado");
       }
-      throw new Error("Correo electrónico o contraseña incorrecta")
+      if(err.status === 404){
+        throw new Error("Token no encontrado");
+      }
       // Probably a 500
       throw new Error("Ha ocurrido un error, intentelo más tarde");
     }
