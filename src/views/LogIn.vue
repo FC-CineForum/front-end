@@ -6,11 +6,11 @@
     >
       <i class="fas fa-envelope fs-1 me-2"></i>
       <CustomInput
-        v-model:value="state.userName"
+        v-model:value="state.username"
         placeholder="Correo o Usuario"
       />
     </div>
-    <p v-if="v$.userName.$error" class="text-danger text-center">
+    <p v-if="v$.username.$error" class="text-danger text-center">
       Es requerido el correo electrónico
     </p>
     <div
@@ -23,7 +23,7 @@
         type="password"
       />
     </div>
-    <p v-if="v$.password.$error" class="text-danger text-center">
+    <p v-if="v$.password  .$error" class="text-danger text-center">
       Es requerida el contraseña
     </p>
     <div
@@ -64,7 +64,7 @@ const router = useRouter();
 const auth = useAuthStore();
 
 const state = reactive({
-  userName: "",
+  username: "",
   password: "",
 });
 
@@ -72,13 +72,13 @@ const remember = ref(false);
 
 const user = computed(() => {
   return {
-    email: state.userName,
+    email: state.username,
     password: state.password,
   };
 });
 
 const rules = computed(() => {
-  return { userName: { required }, password: { required } };
+  return { username: { required }, password: { required } };
 });
 
 const v$ = useValidate(rules, state);
