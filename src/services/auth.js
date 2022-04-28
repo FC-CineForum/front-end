@@ -27,7 +27,12 @@ export default {
       }
       // Bad Request
       if (err.status === 401) {
-        throw new Error("El correo o contraseña no es valido");
+        if(err.message.includes("User")){
+          throw new Error("Usuario no encontrado");
+        }
+        if(err.message.includes("Account")){
+          throw new Error("Cuenta no verificada");
+        }
       }
       // Probably a 500
       throw new Error("Ha ocurrido un error, intentelo más tarde");
@@ -50,7 +55,26 @@ export default {
         if (message.includes("email is already taken")) {
           throw new Error("El correo electrónico no es valido");
         }
+        throw new Error("Algo salió mal con los datos, corroboralos")
       }
+      // Probably a 500
+      throw new Error("Ha ocurrido un error, intentelo más tarde");
+    }
+  },
+
+  async verifyAccount(token){
+    try{
+      await axios.post(`http://localhost:3000/cineforum/signUp/verifyAccount/${token}`)
+    }catch(err){
+      //Probably a 500
+      if (!err.data) {
+        throw new Error("Hubo un error, intentelo más tarde");
+      }
+      // Bad Request
+      if (err.status === 401) {
+        throw new Error("El token ha expirado");
+      }
+      throw new Error("Correo electrónico o contraseña incorrecta")
       // Probably a 500
       throw new Error("Ha ocurrido un error, intentelo más tarde");
     }
