@@ -26,6 +26,7 @@ const route = useRoute();
 
 onMounted(async ()=>{
   try {
+    console.log(route.query.token);
     await authServices.verifyAccount(route.query.token)
     router.push("/login")
   } catch (err) {

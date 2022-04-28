@@ -64,7 +64,7 @@ export default {
 
   async verifyAccount(token){
     try{
-      await axios.post(`http://localhost:3000/cineforum/signUp/verifyAccount/${token}`)
+      await axios.get(`http://localhost:3000/cineforum/verifyAccount?token=${token}`)
     }catch(err){
       //Probably a 500
       if (!err.data) {
