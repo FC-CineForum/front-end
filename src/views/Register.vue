@@ -110,7 +110,7 @@ const birthDateFormatted = computed(() => {
 const user = computed(() => {
   const info = { ...state, avatar: "any_link", isPublic: true };
   info["password"] = state.password.password;
-  info["birthDate"] = birthDateFormatted;
+  info["birthDate"] = birthDateFormatted.value;
   return info;
 });
 
