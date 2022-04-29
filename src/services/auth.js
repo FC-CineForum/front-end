@@ -27,10 +27,10 @@ export default {
       }
       // Bad Request
       if (err.status === 401) {
-        if(err.message.includes("User")){
+        if (err.message.includes("User")) {
           throw new Error("Usuario no encontrado");
         }
-        if(err.message.includes("Account")){
+        if (err.message.includes("Account")) {
           throw new Error("Cuenta no verificada");
         }
       }
@@ -55,17 +55,19 @@ export default {
         if (message.includes("email is already taken")) {
           throw new Error("El correo electrónico no es valido");
         }
-        throw new Error("Algo salió mal con los datos, corroboralos")
+        throw new Error("Algo salió mal con los datos, corroboralos");
       }
       // Probably a 500
       throw new Error("Ha ocurrido un error, intentelo más tarde");
     }
   },
 
-  async verifyAccount(token){
-    try{
-      await axios.get(`http://localhost:3000/cineforum/verifyAccount?token=${token}`)
-    }catch(err){
+  async verifyAccount(token) {
+    try {
+      await axios.get(
+        `http://localhost:3000/cineforum/verifyAccount?token=${token}`
+      );
+    } catch (err) {
       //Probably a 500
       if (!err.data) {
         throw new Error("Hubo un error, intentelo más tarde");
@@ -74,11 +76,11 @@ export default {
       if (err.status === 401) {
         throw new Error("El token ha expirado");
       }
-      if(err.status === 404){
+      if (err.status === 404) {
         throw new Error("Token no encontrado");
       }
       // Probably a 500
       throw new Error("Ha ocurrido un error, intentelo más tarde");
     }
-  }
+  },
 };

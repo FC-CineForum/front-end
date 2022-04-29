@@ -24,20 +24,15 @@ const router = useRouter();
 
 const route = useRoute();
 
-onMounted(async ()=>{
+onMounted(async () => {
   try {
     console.log(route.query.token);
-    await authServices.verifyAccount(route.query.token)
-    router.push("/login")
+    await authServices.verifyAccount(route.query.token);
+    router.push("/login");
   } catch (err) {
-    alert(err)
-    router.push("/")
+    alert(err);
+    router.push("/");
   }
-})
-
-const validateAccount = async() =>{
-  
-}
-
+});
 </script>
 <style></style>

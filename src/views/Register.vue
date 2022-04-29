@@ -106,7 +106,6 @@ const birthDateFormatted = computed(() => {
   return `${info[2]}/${info[1]}/${info[0]}`;
 });
 
-
 const user = computed(() => {
   const info = { ...state, avatar: "any_link", isPublic: true };
   info["password"] = state.password.password;
@@ -126,7 +125,7 @@ const rules = computed(() => {
     },
     birthDate: { required, maxLength: maxLength(10) },
     country: { required },
-  }
+  };
 });
 
 const v$ = useValidate(rules, state);
