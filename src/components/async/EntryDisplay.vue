@@ -28,9 +28,7 @@
       <img :src="info.poster" alt="poster" />
       <iframe :src="info.trailer" @click="changeVideoStatus"></iframe>
     </div>
-  </div>
-  <div class="mt-4 row d-flex flex-row justify-content-center">
-    <div class="col-12 col-md-10 d-flex flex-row">
+    <div class="mt-4 col-12 col-md-10 d-flex flex-row">
       <div
         class="rounded-pill p-1 gender d-flex flex-row justify-content-center"
       >
@@ -47,9 +45,7 @@
         <span>Suspenso</span>
       </div>
     </div>
-  </div>
-  <div class="mt-4 row d-flex flex-row justify-content-center">
-    <div class="col-12 col-md-10">
+    <div class="mt-4 col-12 col-md-10">
       <h4>
         <span class="fw-bold"> Director:</span>
         <span class="info pointer">Lorem Ipsum</span>
@@ -60,8 +56,6 @@
         <span class="info pointer">Lorem Ipsum</span>
       </h4>
     </div>
-  </div>
-  <div class="mt-4 row d-flex justify-content-center">
     <div class="col-12 col-md-10">
       <h4 class="fw-bold">Elenco:</h4>
       <div class="cast">
@@ -72,6 +66,21 @@
           img="https://s1.qwant.com/thumbr/0x380/8/8/75163b41ed922ef17aa0df0116cc4d9f537258e0b817726780be2a0a0121d8/8A4PS5iG7GWEAVFftyqMZKl3qcr.jpg?u=https%3A%2F%2Fimg.sfilm.hu%2Fw780%2F8A4PS5iG7GWEAVFftyqMZKl3qcr.jpg&q=0&b=1&p=0&a=0"
         />
       </div>
+    </div>
+    <div class="mt-4 col-12 col-md-10">
+      <h4 class="fw-bold">Argumento:</h4>
+      <p class="fs-4">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+        mollit anim id est laborum
+      </p>
+    </div>
+    <div class="col-12 col-md-10">
+        <h4 class="fw-bold">Opiniones de usuarios</h4>
     </div>
   </div>
 </template>
