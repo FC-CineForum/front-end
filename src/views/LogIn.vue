@@ -68,7 +68,7 @@ const user = computed(() => {
 const logUser = async () => {
   try {
     await auth.logIn(remember, user.value);
-    router.push("/");
+    router.go(-1);
   } catch (err) {
     alert(err);
   }
