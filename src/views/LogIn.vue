@@ -42,7 +42,7 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, onBeforeRouteLeave } from "vue-router";
 import { useAuthStore } from "@/stores/auth.js";
 import Header from "@/components/Header.vue";
 import CustomInput from "../components/forms/Input.vue";
@@ -63,6 +63,16 @@ const user = computed(() => {
     email: userName.value,
     password: password.value,
   };
+});
+
+onBeforeRouteLeave((to,from,next)=>{
+  if(Object.keys(from).length === 0){
+    next("/")
+  }
+  if(to.name == "validation"){
+    next("/")
+  }
+  next()
 });
 
 const logUser = async () => {
