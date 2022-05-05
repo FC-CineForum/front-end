@@ -22,15 +22,17 @@ export default {
       return data;
     } catch (err) {
       //Probably a 500
-      if (!err.response) {
+      if (!err.data) {
         throw new Error("Hubo un error, intentelo más tarde");
       }
       // Bad Request
-      if (err.response.status === 401) {
-        throw new Error("El correo electrónico no es valido");
-      }
-      if (err.response.status === 400) {
-        throw new Error("Falta contraseña y/o correo");
+      if (err.status === 401) {
+        if (err.message.includes("User")) {
+          throw new Error("Usuario no encontrado");
+        }
+        if (err.message.includes("Account")) {
+          throw new Error("Cuenta no verificada");
+        }
       }
       // Probably a 500
       throw new Error("Ha ocurrido un error, intentelo más tarde");
@@ -44,15 +46,38 @@ export default {
       });
     } catch (err) {
       //Probably a 500
-      if (!err.response) {
+      if (!err.data) {
         throw new Error("Hubo un error, intentelo más tarde");
       }
       // Bad Request
-      if (err.response.status === 401) {
+      if (err.status === 401) {
         const message = err.response.data.error;
         if (message.includes("email is already taken")) {
           throw new Error("El correo electrónico no es valido");
         }
+        throw new Error("Algo salió mal con los datos, corroboralos");
+      }
+      // Probably a 500
+      throw new Error("Ha ocurrido un error, intentelo más tarde");
+    }
+  },
+
+  async verifyAccount(token) {
+    try {
+      await axios.get(
+        `http://localhost:3000/cineforum/verifyAccount?token=${token}`
+      );
+    } catch (err) {
+      //Probably a 500
+      if (!err.data) {
+        throw new Error("Hubo un error, intentelo más tarde");
+      }
+      // Bad Request
+      if (err.status === 401) {
+        throw new Error("El token ha expirado");
+      }
+      if (err.status === 404) {
+        throw new Error("Token no encontrado");
       }
       // Probably a 500
       throw new Error("Ha ocurrido un error, intentelo más tarde");

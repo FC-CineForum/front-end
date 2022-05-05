@@ -13,8 +13,8 @@ export const useAuthStore = defineStore({
   },
   actions: {
     async logIn(remember, user) {
-      const { avatar, token } = await authServices.login(user);
-      this.user = avatar;
+      const { avatar, token, username } = await authServices.login(user);
+      this.user = { avatar, username };
       this.token = token;
       if (remember) {
         sessionStorage.setItem("token", this.token);

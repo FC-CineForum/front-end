@@ -5,48 +5,54 @@
       <div
         class="col-md-5 d-flex flex-row align-items-center border-bottom border-dark"
       >
-        <CustomInput v-model:value="username" placeholder="Usuario" />
+        <CustomInput v-model:value="state.username" placeholder="Usuario" />
       </div>
       <div
         class="col-md-5 d-flex flex-row align-items-center border-bottom border-dark"
       >
-        <CustomInput v-model:value="email" placeholder="Correo" />
+        <CustomInput v-model:value="state.email" placeholder="Correo" />
       </div>
     </div>
+    <p v-if="v$.username.$error" class="text-danger">
+      Se necesita un usuario entre 8 y 25 caracteres
+    </p>
     <div class="row d-flex flex-row justify-content-around">
       <div class="col-md-5 d-flex flex-row border-bottom border-dark">
-        <CustomInput v-model:value="name" placeholder="Nombre" />
+        <CustomInput v-model:value="state.name" placeholder="Nombre" />
       </div>
       <div class="col-md-5 d-flex flex-row border-bottom border-dark">
-        <CustomInput v-model:value="lastName" placeholder="Apellidos" />
+        <CustomInput v-model:value="state.lastName" placeholder="Apellidos" />
       </div>
     </div>
     <div class="row d-flex flex-row justify-content-around">
       <div class="col-md-5 d-flex flex-row border-bottom border-dark">
         <CustomInput
-          v-model:value="password"
+          v-model:value="state.password.password"
           placeholder="Contraseña"
           type="password"
         />
       </div>
       <div class="col-md-5 d-flex flex-row border-bottom border-dark">
         <CustomInput
-          v-model:value="passwordConfirm"
+          v-model:value="state.password.confirm"
           placeholder="Confirmar contraseña"
           type="password"
         />
       </div>
     </div>
+    <p v-if="v$.password.confirm.$error" class="text-danger text-center">
+      Las contraseñas no coinciden
+    </p>
     <div class="row d-flex flex-row justify-content-around">
       <div class="col-md-5 d-flex flex-row border-bottom border-dark">
         <CustomInput
-          v-model:value="birthDate"
+          v-model:value="state.birthDate"
           placeholder="Fecha de Nacimiento"
           type="date"
         />
       </div>
       <div class="col-md-5 d-flex flex-row border-bottom border-dark">
-        <CountrySelector v-model:value="country" />
+        <CountrySelector v-model:value="state.country" />
       </div>
     </div>
   </div>
@@ -64,9 +70,17 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { computed, reactive } from "vue";
 import { useRouter } from "vue-router";
 import authServices from "@/services/auth.js";
+import useValidate from "@vuelidate/core";
+import {
+  required,
+  email,
+  minLength,
+  maxLength,
+  sameAs,
+} from "@vuelidate/validators";
 import Header from "@/components/Header.vue";
 import CountrySelector from "@/components/forms/CountrySelector.vue";
 import CustomInput from "@/components/forms/Input.vue";
@@ -74,39 +88,56 @@ import CustomButton from "@/components/forms/Button.vue";
 
 const router = useRouter();
 
-const username = ref("");
+const state = reactive({
+  username: "",
+  name: "",
+  lastName: "",
+  email: "",
+  password: {
+    password: "",
+    confirm: "",
+  },
+  birthDate: "",
+  country: "",
+});
 
-const name = ref("");
-
-const lastName = ref("");
-
-const email = ref("");
-
-const password = ref("");
-
-const passwordConfirm = ref("");
-
-const birthDate = ref("");
-
-const country = ref("");
+const birthDateFormatted = computed(() => {
+  const info = state.birthDate.split("-");
+  return `${info[2]}/${info[1]}/${info[0]}`;
+});
 
 const user = computed(() => {
+  const info = { ...state, avatar: "any_link", isPublic: true };
+  info["password"] = state.password.password;
+  info["birthDate"] = birthDateFormatted.value;
+  return info;
+});
+
+const rules = computed(() => {
   return {
-    username,
-    name,
-    lastName,
-    email,
-    password,
-    birthDate,
-    country,
-    avatar: "",
-    isPublic: true,
+    username: { required, minLength: minLength(8), maxLength: maxLength(25) },
+    name: { required },
+    lastName: { required },
+    email: { required, email },
+    password: {
+      password: { required },
+      confirm: { required, sameAs: sameAs(state.password.password) },
+    },
+    birthDate: { required, maxLength: maxLength(10) },
+    country: { required },
   };
 });
 
+const v$ = useValidate(rules, state);
+
 const signUser = async () => {
+  await v$.value.$validate();
+  if (v$.value.$error) {
+    alert("Todos los campos son necesarios");
+    return;
+  }
   try {
-    authServices.register(user);
+    await authServices.register(user.value);
     router.push("/");
     alert("Debes validar tu correo electrónico");
   } catch (err) {
