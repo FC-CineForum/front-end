@@ -50,17 +50,12 @@
 </template>
 
 <script setup>
-<<<<<<< HEAD
 import { ref, computed } from "vue";
 import { useRouter, onBeforeRouteLeave } from "vue-router";
-import { useAuthStore } from "@/stores/auth.js";
-=======
 import { ref, computed, reactive } from "vue";
-import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth.js";
 import useValidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
->>>>>>> main
 import Header from "@/components/Header.vue";
 import CustomInput from "../components/forms/Input.vue";
 import CustomButton from "../components/forms/Button.vue";
@@ -83,7 +78,6 @@ const user = computed(() => {
   };
 });
 
-<<<<<<< HEAD
 onBeforeRouteLeave((to,from,next)=>{
   if(Object.keys(from).length === 0){
     next("/")
@@ -94,14 +88,12 @@ onBeforeRouteLeave((to,from,next)=>{
   next()
 });
 
-=======
 const rules = computed(() => {
   return { username: { required }, password: { required } };
 });
 
 const v$ = useValidate(rules, state);
 
->>>>>>> main
 const logUser = async () => {
   await v$.value.$validate();
   if (v$.value.$error) {
