@@ -12,9 +12,11 @@
       </router-link>
     </div>
     <div class="d-flex flex-row align-items-center">
-      <i v-if="auth.userLogged" class="fas fa-bell fa-2x me-3"></i>
-      <div v-if="auth.userLogged" class="user">
-        <i class="fas fa-user fa-2x"></i>
+      <div v-if="auth.userLogged">
+        <i class="fas fa-bell fa-2x me-3"></i>
+        <div class="user">
+          <i class="fas fa-user fa-2x"></i>
+        </div>
       </div>
       <CustomButton v-else class="rounded-pill fw-bold">
         <router-link to="/login">Inicia Sesión</router-link>
