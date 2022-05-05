@@ -11,18 +11,16 @@
         <h1 class="d-none d-md-inline">CineForum</h1>
       </router-link>
     </div>
-    <div class="d-flex flex-row align-items-center">
-      <div v-if="auth.userLogged">
-        <i class="fas fa-bell fa-2x me-3"></i>
-        <div class="user">
-          <i class="fas fa-user fa-2x"></i>
-        </div>
+    <div class="d-flex flex-row align-items-center" v-if="auth.userLogged">
+      <i class="fas fa-bell fa-2x me-3"></i>
+      <div class="user">
+        <i class="fas fa-user fa-2x"></i>
       </div>
-      <CustomButton v-else class="rounded-pill fw-bold">
-        <router-link to="/login">Inicia Sesión</router-link>
-      </CustomButton>
     </div>
-  </div>
+    <CustomButton v-else class="rounded-pill fw-bold">
+      <router-link to="/login">Inicia Sesión</router-link>
+    </CustomButton>
+    </div>
 </template>
 
 <script setup>
