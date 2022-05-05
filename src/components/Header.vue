@@ -20,7 +20,7 @@
     <CustomButton v-else class="rounded-pill fw-bold">
       <router-link to="/login">Inicia Sesión</router-link>
     </CustomButton>
-    </div>
+  </div>
 </template>
 
 <script setup>
