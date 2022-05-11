@@ -48,12 +48,12 @@
     <div class="mt-4 col-12 col-md-10">
       <h4>
         <span class="fw-bold"> Director:</span>
-        <span class="info pointer">Lorem Ipsum</span>
+        <span class="action pointer">Lorem Ipsum</span>
       </h4>
       <h4>
         <span class="fw-bold"> Guionistas:</span>
-        <span class="info pointer">Lorem Ipsum</span>
-        <span class="info pointer">Lorem Ipsum</span>
+        <span class="action pointer">Lorem Ipsum</span>
+        <span class="action pointer">Lorem Ipsum</span>
       </h4>
     </div>
     <div class="col-12 col-md-10">
@@ -79,8 +79,13 @@
         mollit anim id est laborum
       </p>
     </div>
-    <div class="col-12 col-md-10">
+    <div class="col-12 col-md-10 mb-5">
         <h4 class="fw-bold">Opiniones de usuarios</h4>
+        <Comment :comment="{content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', user:'Lorem Ipsum',rate:3}"/>
+        <div class="mt-4 d-flex flex-row align-items-center action pointer">
+          <h4 class="m-0 me-2 fw-bold">Ver más </h4>
+          <i class="fas fa-chevron-right fa-lg"></i>
+        </div>
     </div>
   </div>
 </template>
@@ -88,6 +93,7 @@
 <script setup>
 import ClapperBoard from "@/components/icons/solids/ClapperBoard.vue";
 import Actor from "@/components/Actor.vue";
+import Comment from "@/components/Comment.vue"
 import { defineProps, ref } from "vue";
 
 const props = defineProps({
@@ -134,7 +140,7 @@ img {
   color: rgba(0, 0, 0, 0.2);
 }
 
-.info {
+.action {
   color: var(--cf-main);
   font-weight: normal;
 }

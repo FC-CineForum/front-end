@@ -77,14 +77,14 @@ const user = computed(() => {
   };
 });
 
-onBeforeRouteLeave((to,from,next)=>{
-  if(Object.keys(from).length === 0){
-    next("/")
+onBeforeRouteLeave((to, from, next) => {
+  if (Object.keys(from).length === 0) {
+    next("/");
   }
-  if(to.name == "validation"){
-    next("/")
+  if (to.name == "validation") {
+    next("/");
   }
-  next()
+  next();
 });
 
 const rules = computed(() => {
