@@ -25,4 +25,8 @@ input:focus {
 .pointer {
   cursor: pointer;
 }
+
+.reflection{
+  transform: scaleX(-1);
+}
 </style>

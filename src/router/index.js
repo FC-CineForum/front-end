@@ -23,6 +23,12 @@ const routes = [
     component: () => import("../views/Verify.vue"),
     meta: { removeHeader: true },
   },
+  {
+    path: "/entry",
+    name: "entry",
+    component: () => import("../views/EntryView.vue"),
+    meta: { removeHeader: true },
+  },
   // {
   //   path: "/about",
   //   name: "about",

@@ -50,8 +50,8 @@
 </template>
 
 <script setup>
+import { useRouter, onBeforeRouteLeave } from "vue-router";
 import { ref, computed, reactive } from "vue";
-import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth.js";
 import useValidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
@@ -77,6 +77,16 @@ const user = computed(() => {
   };
 });
 
+onBeforeRouteLeave((to, from, next) => {
+  if (Object.keys(from).length === 0) {
+    next("/");
+  }
+  if (to.name == "validation") {
+    next("/");
+  }
+  next();
+});
+
 const rules = computed(() => {
   return { username: { required }, password: { required } };
 });
@@ -91,7 +101,7 @@ const logUser = async () => {
   }
   try {
     await auth.logIn(remember, user.value);
-    router.push("/");
+    router.go(-1);
   } catch (err) {
     alert(err);
   }
