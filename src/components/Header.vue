@@ -8,7 +8,7 @@
         @click="router.push({ name: 'home' })"
       />
       <router-link to="/">
-        <h1 class="d-none d-md-inline">CineForum</h1>
+        <h1 class="d-none d-md-inline text-white">CineForum</h1>
       </router-link>
     </div>
     <div class="d-flex flex-row align-items-center" v-if="auth.userLogged">
