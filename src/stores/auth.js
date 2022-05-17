@@ -22,5 +22,12 @@ export const useAuthStore = defineStore({
         localStorage.setItem("token", this.token);
       }
     },
+    async fetchUser(){
+      if(this.user || !this.token){
+        return;
+      }
+      const {user} = await authServices.getUser(this.token);
+      this.user = user
+    }
   },
 });
