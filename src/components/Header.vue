@@ -13,9 +13,19 @@
     </div>
     <div class="d-flex flex-row align-items-center" v-if="auth.userLogged">
       <i class="fas fa-bell fa-2x me-3"></i>
-      <div class="user">
-        <i class="fas fa-user fa-2x"></i>
-      </div>
+      <Dropdown>
+        <template v-slot:toggle>
+          <div class="user pointer">
+            <i class="fas fa-user fa-2x"></i>
+          </div>
+        </template>
+      <template v-slot:menu>
+        <div class="mt-1 d-flex flex-column p-2 bg-white rounded-2 border border-dark"  style="min-width:120px">
+          <router-link to="/">Perfil</router-link>
+          <span class="mt-1 text-danger pointer">Cerrar sesión</span>
+        </div>
+      </template>
+      </Dropdown>
     </div>
     <CustomButton v-else class="rounded-pill fw-bold">
       <router-link to="/login">Inicia Sesión</router-link>
@@ -24,14 +34,16 @@
 </template>
 
 <script setup>
-import IdentityLogo from "@/components/icons/IdentityLogo.vue";
-import CustomButton from "./forms/Button.vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth.js";
+import IdentityLogo from "@/components/icons/IdentityLogo.vue";
+import CustomButton from "./forms/Button.vue";
+import Dropdown from "./utilities/Dropdown.vue";
 
 const auth = useAuthStore();
 
 const router = useRouter();
+
 </script>
 
 <style scoped>
@@ -48,6 +60,15 @@ svg {
   width: 100px;
   height: auto;
 }
+
+ul{
+  list-style-type: none;
+}
+
+a{
+  color:var(--cf-main)
+}
+
 .header {
   background: var(--color-background);
   min-width: 100vw;
@@ -59,4 +80,5 @@ svg {
   border-radius: 50%;
   background-color: grey;
 }
+
 </style>
