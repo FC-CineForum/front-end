@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-
+import { useRouter } from "vue-router";
 import authServices from "@/services/auth.js";
 
 export const useAuthStore = defineStore({
@@ -8,18 +8,16 @@ export const useAuthStore = defineStore({
     user: null,
     token: sessionStorage.getItem("token") || localStorage.getItem("token"),
   }),
-  getters: {
-    userLogged: (state) => state.user != null,
-  },
   actions: {
     async logIn(remember, user) {
       const { avatar, token, username } = await authServices.login(user);
       this.user = { avatar, username };
       this.token = token;
+      console.log(remember);
       if (remember) {
-        sessionStorage.setItem("token", this.token);
-      } else {
         localStorage.setItem("token", this.token);
+      } else {
+        sessionStorage.setItem("token", this.token);
       }
     },
     async fetchUser(){
@@ -28,6 +26,12 @@ export const useAuthStore = defineStore({
       }
       const {user} = await authServices.getUser(this.token);
       this.user = user
+    },
+    logOut(){
+      this.user = "";
+      this.token = "";
+      sessionStorage.removeItem("token");
+      localStorage.removeItem("token");
     }
   },
 });
