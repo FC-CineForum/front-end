@@ -100,7 +100,7 @@ const logUser = async () => {
     return;
   }
   try {
-    await auth.logIn(remember, user.value);
+    await auth.logIn(remember.value, user.value);
     router.go(-1);
   } catch (err) {
     alert(err);

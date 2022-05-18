@@ -83,4 +83,15 @@ export default {
       throw new Error("Ha ocurrido un error, intentelo más tarde");
     }
   },
+
+  async getUser(token){
+    try {
+      const { data } = await axios.get("http://localhost:3000/cineforum/getUser",{
+        headers: {Authorization:`Bearer ${token}`}
+      });
+      return data;
+    } catch (error) {
+      return null;
+    }
+  }
 };
