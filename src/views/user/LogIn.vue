@@ -56,8 +56,8 @@ import { useAuthStore } from "@/stores/auth.js";
 import useValidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import Header from "@/components/Header.vue";
-import CustomInput from "../components/forms/Input.vue";
-import CustomButton from "../components/forms/Button.vue";
+import CustomInput from "../../components/forms/Input.vue";
+import CustomButton from "../../components/forms/Button.vue";
 
 const router = useRouter();
 
@@ -81,7 +81,7 @@ onBeforeRouteLeave((to, from, next) => {
   if (Object.keys(from).length === 0) {
     next("/");
   }
-  if (to.name == "validation") {
+  if (to.name == "Validation" || (to.name == "Register" && auth.user)) {
     next("/");
   }
   next();

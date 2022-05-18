@@ -1,47 +1,58 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import { useAuthStore } from "@/stores/auth.js";
+import HomeView from "../views/user/HomeView.vue";
+import entryRoutes from "./entry";
+import adminRoutes from "./admin.js";
 
 const routes = [
   {
     path: "/",
-    name: "home",
+    name: "Home",
     component: HomeView,
   },
   {
     path: "/login",
-    name: "login",
-    component: () => import("../views/LogIn.vue"),
+    name: "LogIn",
+    component: () => import("../views/user/LogIn.vue"),
   },
   {
     path: "/register",
-    name: "register",
-    component: () => import("../views/Register.vue"),
+    name: "Register",
+    component: () => import("../views/user/Register.vue"),
   },
   {
     path: "/verifyAccount",
-    name: "validation",
-    component: () => import("../views/Verify.vue"),
-    meta: { removeHeader: true },
+    name: "Validation",
+    component: () => import("../views/user/Verify.vue"),
   },
   {
     path: "/entry",
-    name: "entry",
-    component: () => import("../views/EntryView.vue"),
-    meta: { removeHeader: true },
+    component: () => import("../views/user/entry/Layout.vue"),
+    children: entryRoutes,
   },
-  // {
-  //   path: "/about",
-  //   name: "about",
-  //   // route level code-splitting
-  //   // this generates a separate chunk (About.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import("../views/AboutView.vue"),
-  // },
+  {
+    path: "/admin",
+    component: () => import("../views/admin/Layout.vue"),
+    meta: { requiresAuth: true },
+    children:adminRoutes
+  }
 ];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
+
+router.beforeEach( async (to, from) => {
+  // Will check meta of routes and deny acces when auth is needed
+  const auth = useAuthStore();
+  await auth.fetchUser()
+  if(to.meta.requiresAuth && !auth.userLogged) {
+    return {
+      path: '/login',
+      // save the location we were at to come back later
+    }
+  }
+})
 
 export default router;

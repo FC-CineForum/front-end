@@ -26,7 +26,7 @@
             <p class="fw-bold mb-0 fs-5">{{comment.rate}}/5</p>
         </div>
     </div>
-    <div v-if="auth.userLogged" class="px-3 py-2 d-flex flex-row  border-top border-dark">
+    <div v-if="user" class="px-3 py-2 d-flex flex-row  border-top border-dark">
       <div>
         <i class="p-2 fas fa-user fa-2x bg-secondary text-white rounded-circle"></i>
       </div>
@@ -38,6 +38,7 @@
 <script setup>
 import ClapperBoard from "@/components/icons/solids/ClapperBoard.vue";
 import CustomTextArea from "@/components/forms/TextArea.vue";
+import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/auth.js";
 import { ref } from "vue";
 defineProps({
@@ -48,6 +49,8 @@ defineProps({
 });
 
 const auth = useAuthStore();
+
+const { user } = storeToRefs(auth);
 
 const reply = ref("")
 

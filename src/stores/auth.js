@@ -8,12 +8,14 @@ export const useAuthStore = defineStore({
     user: null,
     token: sessionStorage.getItem("token") || localStorage.getItem("token"),
   }),
+  getters:{
+    userLogged:  (state) => state.user != null
+  },
   actions: {
     async logIn(remember, user) {
       const { avatar, token, username } = await authServices.login(user);
       this.user = { avatar, username };
       this.token = token;
-      console.log(remember);
       if (remember) {
         localStorage.setItem("token", this.token);
       } else {
