@@ -8,6 +8,9 @@ export const useAuthStore = defineStore({
     user: null,
     token: sessionStorage.getItem("token") || localStorage.getItem("token"),
   }),
+  getters:{
+    userLogged:  (state) => state.user != null
+  },
   actions: {
     async logIn(remember, user) {
       const { avatar, token, username } = await authServices.login(user);
