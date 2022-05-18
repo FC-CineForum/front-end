@@ -1,6 +1,6 @@
 <script setup>
 import { reactive } from "vue";
-import Entry from "../components/Entry.vue";
+import Entry from "../../components/Entry.vue";
 import Header from "@/components/Header.vue";
 const movie = reactive({
   title: "The Batman",

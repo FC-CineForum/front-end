@@ -13,7 +13,6 @@ export const useAuthStore = defineStore({
       const { avatar, token, username } = await authServices.login(user);
       this.user = { avatar, username };
       this.token = token;
-      console.log(remember);
       if (remember) {
         localStorage.setItem("token", this.token);
       } else {
