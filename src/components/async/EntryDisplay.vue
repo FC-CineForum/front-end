@@ -81,10 +81,9 @@
     </div>
     <div class="col-12 col-md-10 mb-5">
         <h4 class="fw-bold">Opiniones de usuarios</h4>
-        <Comment :comment="{content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', user:'Lorem Ipsum',rate:3}"/>
+        <Review :review="info.review" />
         <div class="mt-4 d-flex flex-row align-items-center action pointer">
-          <h4 class="m-0 me-2 fw-bold">Ver más </h4>
-          <i class="fas fa-chevron-right fa-lg"></i>
+          <h4 class="m-0 me-2 fw-bold"><router-link to="/entry/reviews">Ver más <i class="fas fa-chevron-right fa-lg"></i></router-link></h4>
         </div>
     </div>
   </div>
@@ -93,7 +92,7 @@
 <script setup>
 import ClapperBoard from "@/components/icons/solids/ClapperBoard.vue";
 import Actor from "@/components/Actor.vue";
-import Comment from "@/components/Comment.vue"
+import Review from "@/components/Review.vue"
 import { defineProps, ref } from "vue";
 
 const props = defineProps({
@@ -110,6 +109,7 @@ const getEntryInfo = async () => {
       "https://static.posters.cz/image/1300/posters/the-batman-2022-i122127.jpg",
     trailer: "https://www.youtube.com/embed/fWQrd6cwJ0A",
     rating: "4.2",
+    review:{content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', user:'Lorem Ipsum',rate:3}
   };
 };
 

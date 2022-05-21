@@ -1,8 +1,8 @@
 <template>
-  <Header />
-  <Suspense>
+    <Header />
+    <Suspense>
     <template #default>
-      <Display title="The Batman" />
+      <Display />
     </template>
     <template #fallback>
       <div
@@ -23,7 +23,9 @@
 
 <script setup>
 import Header from "@/components/Header.vue";
-import Display from "@/components/async/EntryDisplay.vue";
+import Display from "@/components/async/MakeReviewDisplay.vue";
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>
