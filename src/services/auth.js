@@ -1,7 +1,7 @@
 import axios from "redaxios";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: import.meta.env.VITE_API_URL,
   withCredentials: false, // This is the default
   headers: {
     Accept: "application/json",
