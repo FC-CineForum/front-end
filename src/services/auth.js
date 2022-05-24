@@ -27,10 +27,10 @@ export default {
       }
       // Bad Request
       if (err.status === 401) {
-        if (err.message.includes("User")) {
+        if (err.data.message.includes("User")) {
           throw new Error("Usuario no encontrado");
         }
-        if (err.message.includes("Account")) {
+        if (err.data.message.includes("Account")) {
           throw new Error("Cuenta no verificada");
         }
       }
