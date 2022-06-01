@@ -1,7 +1,7 @@
 <template>
   <div class="mt-5 mx-5 d-flex flex-row justify-content-between">
     <div class="d-flex flex-column">
-      <h1 class="h1 fw-bold">{{ info.title }}</h1>
+      <h1 class="h1 fw-bold">{{ entry.title }}</h1>
       <div class="d-flex fs-3 stats">
         <p>2002</p>
         &#9679;
@@ -25,8 +25,8 @@
     <div
       class="col-12 col-md-10 d-flex flex-column flex-md-row justify-content-center align-items-center align-items-md-end"
     >
-      <img :src="info.poster" alt="poster" />
-      <iframe :src="info.trailer" @click="changeVideoStatus"></iframe>
+      <img :src="entry.image" alt="poster" />
+      <iframe :src="entry.trailer" @click="changeVideoStatus"></iframe>
     </div>
     <div class="mt-4 col-12 col-md-10 d-flex flex-row">
       <div
@@ -81,7 +81,7 @@
     </div>
     <div class="col-12 col-md-10 mb-5">
         <h4 class="fw-bold">Opiniones de usuarios</h4>
-        <Review :review="info.review" />
+        <Review v-if="entry.review" :review="entry.review" />
         <div class="mt-4 d-flex flex-row align-items-center action pointer">
           <h4 class="m-0 me-2 fw-bold"><router-link to="/entry/reviews">Ver más <i class="fas fa-chevron-right fa-lg"></i></router-link></h4>
         </div>
@@ -113,7 +113,7 @@ const getEntryInfo = async () => {
   };
 };
 
-const info = await getEntryInfo();
+const entry = await getEntryInfo();
 </script>
 
 <style scoped>
