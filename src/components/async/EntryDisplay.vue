@@ -3,9 +3,9 @@
     <div class="d-flex flex-column">
       <h1 class="h1 fw-bold">{{ entry.title }}</h1>
       <div class="d-flex fs-3 stats">
-        <p>2002</p>
+        <p>{{entry.release}}</p>
         &#9679;
-        <p>PG-13</p>
+        <p>{{entry.classification}}</p>
         &#9679;
         <p>1h40m</p>
       </div>
@@ -15,7 +15,7 @@
       <div class="d-flex justify-content-around">
         <ClapperBoard />
         <div class="d-flex flex-column">
-          <h4><span class="fw-bold">4.2</span>/5</h4>
+          <h4><span class="fw-bold">{{rating.avg}}</span>/5</h4>
           <h4>5k</h4>
         </div>
       </div>
@@ -26,9 +26,9 @@
       class="col-12 col-md-10 d-flex flex-column flex-md-row justify-content-center align-items-center align-items-md-end"
     >
       <img :src="entry.image" alt="poster" />
-      <iframe :src="entry.trailer" @click="changeVideoStatus"></iframe>
+      <img :src="entry.trailer" class="banner" alt="banner"/>
     </div>
-    <div class="mt-4 col-12 col-md-10 d-flex flex-row">
+    <!-- <div class="mt-4 col-12 col-md-10 d-flex flex-row">
       <div
         class="rounded-pill p-1 gender d-flex flex-row justify-content-center"
       >
@@ -44,7 +44,7 @@
       >
         <span>Suspenso</span>
       </div>
-    </div>
+    </div> -->
     <div class="mt-4 col-12 col-md-10">
       <h4>
         <span class="fw-bold"> Director:</span>
@@ -70,13 +70,7 @@
     <div class="mt-4 col-12 col-md-10">
       <h4 class="fw-bold">Argumento:</h4>
       <p class="fs-4">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum
+        {{entry.synopsis}}
       </p>
     </div>
     <div class="col-12 col-md-10 mb-5">
@@ -90,30 +84,30 @@
 </template>
 
 <script setup>
+import { defineProps, reactive } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import ClapperBoard from "@/components/icons/solids/ClapperBoard.vue";
 import Actor from "@/components/Actor.vue";
 import Review from "@/components/Review.vue"
-import { defineProps, ref } from "vue";
+import services from "@/services/entry.js";
 
-const props = defineProps({
-  title: {
-    type: String,
-    required: true,
-  },
-});
-const getEntryInfo = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-  return {
-    title: "The batman",
-    poster:
-      "https://static.posters.cz/image/1300/posters/the-batman-2022-i122127.jpg",
-    trailer: "https://www.youtube.com/embed/fWQrd6cwJ0A",
-    rating: "4.2",
-    review:{content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', user:'Lorem Ipsum',rate:3}
-  };
+const router = useRouter();
+
+const route = useRoute();
+
+const fetchData = async () => {
+  try{
+    const data = await services.getEntryById(route.params.id);
+    return data;
+  }catch(e){
+    alert(e)
+    router.push('/');
+  }
 };
 
-const entry = await getEntryInfo();
+
+const {entry, rating} = await fetchData();
+
 </script>
 
 <style scoped>
@@ -126,11 +120,6 @@ svg {
   width: 50px;
 }
 
-iframe {
-  width: 100%;
-  height: 500px;
-}
-
 img {
   width: 250px;
   height: 350px;
@@ -138,6 +127,11 @@ img {
 
 .stats {
   color: rgba(0, 0, 0, 0.2);
+}
+
+.banner {
+  width: 100%;
+  height: 500px;
 }
 
 .action {

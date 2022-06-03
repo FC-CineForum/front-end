@@ -1,6 +1,6 @@
 export default [
     {
-        path:"",
+        path:":id",
         name:"Entry",
         component:()=> import("@/views/user/entry/EntryView.vue")
     },
