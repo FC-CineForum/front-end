@@ -5,7 +5,7 @@ export default [
         component:()=> import("@/views/user/entry/EntryView.vue")
     },
     {
-        path:"reviews",
+        path:"reviews/:id",
         name:"EntryReview",
         component:()=> import("@/views/user/entry/EntryReviews.vue"),
     },

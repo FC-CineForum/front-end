@@ -22,8 +22,6 @@ export default {
             if (!err.data) {
                 throw new Error("Hubo un error, intentelo más tarde");
             }
-            // Probably a 500
-            throw new Error("Ha ocurrido un error, intentelo más tarde");
         }
     },
 
