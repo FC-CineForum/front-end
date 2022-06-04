@@ -55,7 +55,7 @@
         <h4 class="fw-bold">Opiniones de usuarios</h4>
         <Review :review="entry.ratings[0]" />
         <div class="mt-4 d-flex flex-row align-items-center action pointer">
-          <h4 class="m-0 me-2 fw-bold"><router-link to="/entry/reviews">Ver más <i class="fas fa-chevron-right fa-lg"></i></router-link></h4>
+          <h4 class="m-0 me-2 fw-bold"><router-link :to="{name:'EntryReview',param:{id:entry.id}}" >Ver más <i class="fas fa-chevron-right fa-lg"></i></router-link></h4>
         </div>
     </div>
   </div>
