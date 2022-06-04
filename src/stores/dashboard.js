@@ -14,8 +14,6 @@ export const useDashboardStore = defineStore({
         }
         const data = await userServices.getDashboard();
         this.entries = data;
-        console.log(data);
-        console.log(this.entries);
         return this.entries;
     },
   },
