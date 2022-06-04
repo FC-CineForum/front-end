@@ -7,7 +7,7 @@
         &#9679;
         <p>{{entry.classification}}</p>
         &#9679;
-        <p>1h40m</p>
+        <p>{{ entry.type == "m" ? `${ entry.length }minutos` : `${entry.noEpisodes} episodios`}}</p>
       </div>
     </div>
     <div class="d-flex flex-column">
@@ -15,8 +15,7 @@
       <div class="d-flex justify-content-around">
         <ClapperBoard />
         <div class="d-flex flex-column">
-          <h4><span class="fw-bold">{{rating.avg}}</span>/5</h4>
-          <h4>5k</h4>
+          <h4><span class="fw-bold">{{entry.rating}}</span>/5</h4>
         </div>
       </div>
     </div>
@@ -28,42 +27,21 @@
       <img :src="entry.image" alt="poster" />
       <img :src="entry.trailer" class="banner" alt="banner"/>
     </div>
-    <!-- <div class="mt-4 col-12 col-md-10 d-flex flex-row">
-      <div
-        class="rounded-pill p-1 gender d-flex flex-row justify-content-center"
-      >
-        <span>Ciencia ficción</span>
-      </div>
-      <div
-        class="rounded-pill p-1 gender d-flex flex-row justify-content-center"
-      >
-        <span>Acción</span>
-      </div>
-      <div
-        class="rounded-pill p-1 gender d-flex flex-row justify-content-center"
-      >
-        <span>Suspenso</span>
-      </div>
-    </div> -->
     <div class="mt-4 col-12 col-md-10">
       <h4>
         <span class="fw-bold"> Director:</span>
-        <span class="action pointer">Lorem Ipsum</span>
+        <span class="action" v-for="director in directors">{{director.name}}</span>
       </h4>
       <h4>
         <span class="fw-bold"> Guionistas:</span>
-        <span class="action pointer">Lorem Ipsum</span>
-        <span class="action pointer">Lorem Ipsum</span>
+        <span class="action" v-for="writter in writters">{{writter.name}}</span>
       </h4>
     </div>
     <div class="col-12 col-md-10">
       <h4 class="fw-bold">Elenco:</h4>
       <div class="cast">
         <Actor
-          v-for="i in 10"
-          name="Robert Pattinson"
-          role="Batman"
-          img="https://s1.qwant.com/thumbr/0x380/8/8/75163b41ed922ef17aa0df0116cc4d9f537258e0b817726780be2a0a0121d8/8A4PS5iG7GWEAVFftyqMZKl3qcr.jpg?u=https%3A%2F%2Fimg.sfilm.hu%2Fw780%2F8A4PS5iG7GWEAVFftyqMZKl3qcr.jpg&q=0&b=1&p=0&a=0"
+          v-for="actor in actors" :actor="actor"
         />
       </div>
     </div>
@@ -73,9 +51,9 @@
         {{entry.synopsis}}
       </p>
     </div>
-    <div class="col-12 col-md-10 mb-5">
+    <div v-if="entry.ratings.length > 0" class="col-12 col-md-10 mb-5">
         <h4 class="fw-bold">Opiniones de usuarios</h4>
-        <Review v-if="entry.review" :review="entry.review" />
+        <Review :review="entry.ratings[0]" />
         <div class="mt-4 d-flex flex-row align-items-center action pointer">
           <h4 class="m-0 me-2 fw-bold"><router-link to="/entry/reviews">Ver más <i class="fas fa-chevron-right fa-lg"></i></router-link></h4>
         </div>
@@ -84,7 +62,7 @@
 </template>
 
 <script setup>
-import { defineProps, reactive } from "vue";
+import { reactive } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import ClapperBoard from "@/components/icons/solids/ClapperBoard.vue";
 import Actor from "@/components/Actor.vue";
@@ -105,8 +83,13 @@ const fetchData = async () => {
   }
 };
 
+const entry = await fetchData();
 
-const {entry, rating} = await fetchData();
+const actors = reactive(entry.cast.filter(member => member.role === "Actor"))
+
+const directors = reactive(entry.cast.filter(member => member.role === "Director"))
+
+const writters = reactive(entry.cast.filter(member => member.role === "Writer"))
 
 </script>
 
