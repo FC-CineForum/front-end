@@ -8,12 +8,17 @@
 </template>
 
 <script setup>
-import services from "@/services/user.js";
 import Entry from "@/components/Entry.vue";
+import { useDashboardStore } from "@/stores/dashboard.js";
+
+const dashboard = useDashboardStore();
 
 const fetchDashboard = async () => {
+    if(dashboard.entries.length >= 1){
+        return dashboard.entries;
+    }
     try {
-        const data = await services.getDashboard();
+        const data = await dashboard.fetchDashboard();
         return data;
     } catch (e) {
         alert("Parece que algo ha salido mal, por favor visitenos más tarde");

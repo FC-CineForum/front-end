@@ -22,10 +22,6 @@ export default {
             if (!err.data) {
                 throw new Error("Hubo un error, intentelo más tarde");
             }
-            // Bad Request
-            if (err.status === 401) {
-                throw new Error("No estás autenticado");
-            }
             // Probably a 500
             throw new Error("Ha ocurrido un error, intentelo más tarde");
         }
