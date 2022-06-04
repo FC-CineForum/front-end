@@ -10,7 +10,7 @@ export default [
         component:()=> import("@/views/user/entry/EntryReviews.vue"),
     },
     {
-        path:"reviews/new",
+        path:"reviews/new/:id",
         name:"EntryReviewNew",
         meta:{requiresAuth:true},
         component:()=> import("@/views/user/entry/MakeReview.vue"),

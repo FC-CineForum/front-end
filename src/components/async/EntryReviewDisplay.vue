@@ -8,7 +8,7 @@
                 <div class="d-flex flex-row justify-content-between">
                     <h1 class="h1"><span class="fw-bold">{{entry.title}}</span> <span class="fw-light">({{entry.release}})</span></h1>
                     <div class="pointer">
-                         <router-link to="/entry/reviews/new"><i class="fas fa-plus fa-2x text-white rounded-circle p-2" style="background:var(--color-background-main)"></i></router-link>
+                         <router-link :to="{name:'EntryReviewNew',param:{id:entry.id}}"><i class="fas fa-plus fa-2x text-white rounded-circle p-2" style="background:var(--color-background-main)"></i></router-link>
                     </div>
                 </div>
             </div>
