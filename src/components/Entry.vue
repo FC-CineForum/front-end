@@ -8,7 +8,7 @@
         <p class="text-end"><i class="fas fa-plus fa-lg"></i></p>
       </div>
       <div class="d-flex flex-row justify-content-between p-3 content">
-        <p class="fw-bold fs-5">{{ entry.title }}</p>
+        <router-link :to="{name:'Entry', params:{id:entry.id}}"><p class="fw-bold fs-5">{{ entry.title }}</p></router-link>
         <div class="d-flex flex-row alig-items-center">
           <ClapperBoard class="me-3" />
           <p v-if="entry.rating" class="fw-bold fs-5">{{ entry.rating }}</p>
