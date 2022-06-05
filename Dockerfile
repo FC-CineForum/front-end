@@ -1,21 +1,29 @@
-# We will use the official node js image
-FROM node:16
+# BUILD STAGE
+FROM node:lts-alpine AS build-stage
 
-RUN npm install -g http-server
+ARG API_URL
 
-# Set the work directory
-WORKDIR /cineforum
+ENV VITE_API_URL $API_URL
 
-# Settings
+WORKDIR /app
+
 COPY package*.json ./
 
-# Copy the rest of the files
-COPY . ./
+RUN npm install
 
-# Create the app
+COPY . .
+
 RUN npm run build
 
-CMD [ "http-server", "dist" ]
+# PRODUCTION STAGE
+FROM nginx:stable-alpine AS production-stage
 
-# Port to use 8080
-EXPOSE 8080
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# CMD ["nginx", "-g", "daemon off;"]
+
+ENV PORT 80
+
+CMD sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
