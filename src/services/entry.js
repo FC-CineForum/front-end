@@ -67,5 +67,15 @@ export default{
         throw new Error("Hubo un error, intentelo más tarde");
       }
     }
+  },
+  async  deleteEntryById(id){
+    try{
+      await apiClient.delete(`/cineforum/entry/${id}`);
+    }catch(err){
+      //Probably a 500
+      if(!err.data){
+        throw new Error("Hubo un error, intentelo más tarde");
+      }
+    }
   }
 }
