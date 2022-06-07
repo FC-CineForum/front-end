@@ -27,5 +27,45 @@ export default{
       // Probably a 500
       throw new Error("Ha ocurrido un error, intentelo más tarde");
     }
+  },
+  async addMovie(movie){
+    try{
+      await apiClient.post(`/cineforum/movies`, movie);
+    }catch(err){
+      //Probably a 500
+      if(!err.data){
+        throw new Error("Hubo un error, intentelo más tarde");
+      }
+      // Bad Request
+      if(err.status === 400){
+        throw new Error("Faltó algo en los datos, corroboralos");
+      }
+      if(err.status === 409){
+        throw new Error("Ya existe una película con ese titulo");
+      }
+    }
+  },
+  async addSeries(series){
+    try{
+      await apiClient.post(`/cineforum/series`, series);
+    }catch(err){
+      //Probably a 500
+      if(!err.data){
+        throw new Error("Hubo un error, intentelo más tarde");
+      }
+      if(err.status === 409){
+        throw new Error("Ya existe una serie con ese titulo");
+      }
+    }
+  },
+  async addEpisode(episode){
+    try{
+      await apiClient.post(`/cineforum/episodes`, episode);
+    }catch(err){
+      //Probably a 500
+      if(!err.data){
+        throw new Error("Hubo un error, intentelo más tarde");
+      }
+    }
   }
 }
