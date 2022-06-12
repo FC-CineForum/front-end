@@ -17,7 +17,7 @@
         </div>
         <div class="d-flex flex-row align-items-center">
             <i class="fas fa-review-alt fa-2x me-2"></i>
-            <p v-if="user" class="mb-0 action">Comentar</p>
+            <p v-if="user" class="mb-0 action pointer" @click="setCommentFocus">Comentar</p>
         </div>
         <div class="d-flex flex-row align-items-center">
             <div v-if="user" >
@@ -31,7 +31,7 @@
       <div>
         <i class="p-2 fas fa-user fa-2x bg-secondary text-white rounded-circle"></i>
       </div>
-      <CustomTextArea class="border-bottom border-dark px-3" :value="reply" placeholder="" />
+      <CustomTextArea :id="id" class="border-bottom border-dark px-3" :value="reply" placeholder="" />
     </div>
   </div>
 </template>
@@ -42,18 +42,25 @@ import CustomTextArea from "@/components/forms/TextArea.vue";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/auth.js";
 import { ref } from "vue";
-defineProps({
+const { review } = defineProps({
   review: {
     type: Object,
     required: true,
   },
 });
 
+const id = ref(`review-comment-${review.id}`);
+
 const auth = useAuthStore();
 
 const { user } = storeToRefs(auth);
 
 const reply = ref("")
+
+const setCommentFocus = ()=>{
+  const textarea = document.getElementById(id);
+  textarea.focus();
+}
 
 </script>
 
