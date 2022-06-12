@@ -46,7 +46,7 @@
       <div>
         <i class="p-2 fas fa-user fa-2x bg-secondary text-white rounded-circle"></i>
       </div>
-      <CustomTextArea :id="id" class="border-bottom border-dark px-3" :value="reply" placeholder="" />
+      <CustomTextArea @keypress="submitReply" :id="id" class="border-bottom border-dark px-3" v-model:value="reply"/>
     </div>
   </div>
 </template>
@@ -57,6 +57,8 @@ import CustomTextArea from "@/components/forms/TextArea.vue";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/auth.js";
 import { ref } from "vue";
+import services from "@/services/user.js";
+
 const { review } = defineProps({
   review: {
     type: Object,
@@ -75,6 +77,26 @@ const reply = ref("")
 const setCommentFocus = ()=>{
   const textarea = document.getElementById(id);
   textarea.focus();
+}
+
+const submitReply = async (event)=>{
+  if(event.keyCode === 13 && reply.value.length>0){
+    event.preventDefault();
+    event.stopPropagation();
+    const replyInfo = {
+      message: reply.value,
+      username: auth.user.username,
+    }
+    console.log(auth.user.username, reply.value);
+    try {
+      await services.addReply(review.ratingId, replyInfo);
+      reply.value = "";
+      review.replies.push(replyInfo);
+    } catch (error) {
+      alert(error.message);
+    }
+
+  }
 }
 
 

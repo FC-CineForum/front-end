@@ -22,7 +22,22 @@ export default {
             if (!err.data) {
                 throw new Error("Hubo un error, intentelo más tarde");
             }
+            throw new Error("Ha ocurrido un error, intentelo más tarde");
         }
     },
-
+    async addReply(ratingId,reply){
+        try{
+            await apiClient.post(`/cineforum/reply/${ratingId}`,reply);
+        }catch(err){
+            //Probably a 500
+            if(!err.data){
+                throw new Error("Hubo un error, intentelo más tarde");
+            }
+            // Bad Request
+            if(err.status === 400){
+                throw new Error("Falta la respuesta");
+            }
+            throw new Error("Ha ocurrido un error, intentelo más tarde");
+        }
+    }
 }
