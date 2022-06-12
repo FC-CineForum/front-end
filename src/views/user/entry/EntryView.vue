@@ -2,7 +2,7 @@
   <Header />
   <Suspense>
     <template #default>
-      <Display title="The Batman" />
+      <Display/>
     </template>
     <template #fallback>
       <div

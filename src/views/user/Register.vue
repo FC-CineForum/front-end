@@ -10,7 +10,7 @@
       <div
         class="col-md-5 d-flex flex-row align-items-center border-bottom border-dark"
       >
-        <CustomInput v-model:value="state.email" placeholder="Correo" />
+        <CustomInput type="email" v-model:value="state.email" placeholder="Correo" />
       </div>
     </div>
     <p v-if="v$.username.$error" class="text-danger">
@@ -21,7 +21,7 @@
         <CustomInput v-model:value="state.name" placeholder="Nombre" />
       </div>
       <div class="col-md-5 d-flex flex-row border-bottom border-dark">
-        <CustomInput v-model:value="state.lastName" placeholder="Apellidos" />
+        <CustomInput type="text" v-model:value="state.lastName" placeholder="Apellidos" />
       </div>
     </div>
     <div class="row d-flex flex-row justify-content-around">

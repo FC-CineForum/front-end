@@ -1,20 +1,20 @@
 import axios from "redaxios";
 
-// const apiClient = axios.create({
-//   baseUrl: import.meta.env.VITE_API_URL,
-//   withCredentials: false, // This is the default
-//   headers: {
-//     Accept: "application/json",
-//     "Content-Type": "application/json",
-//   },
-//   timeout: 10000,
-// });
+const apiClient = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+  withCredentials: false, // This is the default
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
+  timeout: 10000,
+});
 
 export default {
   async login(user) {
     try {
-      const { data } = await axios.post(
-        "http://localhost:3000/cineforum/logIn",
+      const { data } = await apiClient.post(
+        "cineforum/logIn",
         {
           ...user,
         }
@@ -27,10 +27,10 @@ export default {
       }
       // Bad Request
       if (err.status === 401) {
-        if (err.message.includes("User")) {
+        if (err.data.message.includes("User")) {
           throw new Error("Usuario no encontrado");
         }
-        if (err.message.includes("Account")) {
+        if (err.data.message.includes("Account")) {
           throw new Error("Cuenta no verificada");
         }
       }
@@ -41,7 +41,7 @@ export default {
 
   async register(user) {
     try {
-      await axios.post("http://localhost:3000/cineforum/signUp", {
+      await apiClient.post("cineforum/signUp", {
         ...user,
       });
     } catch (err) {
@@ -64,8 +64,8 @@ export default {
 
   async verifyAccount(token) {
     try {
-      await axios.get(
-        `http://localhost:3000/cineforum/verifyAccount?token=${token}`
+      await apiClient.get(
+        `cineforum/verifyAccount?token=${token}`
       );
     } catch (err) {
       //Probably a 500
@@ -86,7 +86,7 @@ export default {
 
   async getUser(token){
     try {
-      const { data } = await axios.get("http://localhost:3000/cineforum/getUser",{
+      const { data } = await apiClient.get("cineforum/getUser",{
         headers: {Authorization:`Bearer ${token}`}
       });
       return data;

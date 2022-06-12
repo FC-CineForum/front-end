@@ -3,15 +3,15 @@
     <div class="d-inline-flex flex-column container">
       <div
         class="flex-grow-1 poster"
-        :style="`background:url(${movie.poster})`"
+        :style="`background:url(${entry.image})`"
       >
         <p class="text-end"><i class="fas fa-plus fa-lg"></i></p>
       </div>
       <div class="d-flex flex-row justify-content-between p-3 content">
-        <p class="fw-bold fs-5">{{ movie.title }}</p>
+        <router-link :to="{name:'Entry', params:{id:entry.id}}"><p class="fw-bold fs-5">{{ entry.title }}</p></router-link>
         <div class="d-flex flex-row alig-items-center">
           <ClapperBoard class="me-3" />
-          <p class="fw-bold fs-5">{{ movie.rating }}</p>
+          <p v-if="entry.rating" class="fw-bold fs-5">{{ entry.rating }}</p>
         </div>
       </div>
     </div>
@@ -22,7 +22,7 @@
 import ClapperBoard from "../components/icons/solids/ClapperBoard.vue";
 
 defineProps({
-  movie: {
+  entry: {
     type: Object,
     required: true,
   },
