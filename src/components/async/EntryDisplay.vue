@@ -1,13 +1,13 @@
 <template>
   <div class="mt-5 mx-5 d-flex flex-row justify-content-between">
     <div class="d-flex flex-column">
-      <h1 class="h1 fw-bold">{{ entry.title }}</h1>
+      <h1 class="h1 fw-bold">{{ data.entry.title }}</h1>
       <div class="d-flex fs-3 stats">
-        <p>{{entry.release}}</p>
+        <p>{{data.entry.release}}</p>
         &#9679;
-        <p>{{entry.classification}}</p>
+        <p>{{data.entry.classification}}</p>
         &#9679;
-        <p>{{ entry.type == "m" ? `${ entry.length }minutos` : `${entry.noEpisodes} episodios`}}</p>
+        <p>{{ data.entry.type == "m" ? `${ data.movie.length }minutos` : `${data.noEpisodes} episodios`}}</p>
       </div>
     </div>
     <div class="d-flex flex-column">
@@ -15,7 +15,7 @@
       <div class="d-flex justify-content-around">
         <ClapperBoard />
         <div class="d-flex flex-column">
-          <h4><span class="fw-bold">{{entry.rating}}</span>/5</h4>
+          <h4><span class="fw-bold">{{data.rating}}</span>/5</h4>
         </div>
       </div>
     </div>
@@ -24,8 +24,8 @@
     <div
       class="col-12 col-md-10 d-flex flex-column flex-md-row justify-content-center align-items-center align-items-md-end"
     >
-      <img :src="entry.image" alt="poster" />
-      <img :src="entry.trailer" class="banner" alt="banner"/>
+      <img :src="data.entry.image" alt="poster" />
+      <img :src=" data.entry.type == 'm' ? data.movie.trailer : data.series.trailer " class="banner" alt="banner"/>
     </div>
     <div class="mt-4 col-12 col-md-10">
       <h4>
@@ -48,14 +48,14 @@
     <div class="mt-4 col-12 col-md-10">
       <h4 class="fw-bold">Argumento:</h4>
       <p class="fs-4">
-        {{entry.synopsis}}
+        {{data.entry.synopsis}}
       </p>
     </div>
-    <div v-if="entry.ratings.length > 0" class="col-12 col-md-10 mb-5">
+    <div v-if="data.ratings.length > 0" class="col-12 col-md-10 mb-5">
         <h4 class="fw-bold">Opiniones de usuarios</h4>
-        <Review :review="entry.ratings[0]" />
+        <Review :review="data.ratings[0]" />
         <div class="mt-4 d-flex flex-row align-items-center action pointer">
-          <h4 class="m-0 me-2 fw-bold"><router-link :to="{name:'EntryReview',param:{id:entry.id}}" >Ver más <i class="fas fa-chevron-right fa-lg"></i></router-link></h4>
+          <h4 class="m-0 me-2 fw-bold"><router-link :to="{name:'EntryReview',param:{id:route.params.id}}" >Ver más <i class="fas fa-chevron-right fa-lg"></i></router-link></h4>
         </div>
     </div>
   </div>
@@ -83,13 +83,13 @@ const fetchData = async () => {
   }
 };
 
-const entry = await fetchData();
+const data = await fetchData();
 
-const actors = reactive(entry.cast.filter(member => member.role === "Actor"))
+const actors = reactive(data.cast.filter(member => member.role === "Actor"))
 
-const directors = reactive(entry.cast.filter(member => member.role === "Director"))
+const directors = reactive(data.cast.filter(member => member.role === "Director"))
 
-const writters = reactive(entry.cast.filter(member => member.role === "Writer"))
+const writters = reactive(data.cast.filter(member => member.role === "Writer"))
 
 </script>
 
