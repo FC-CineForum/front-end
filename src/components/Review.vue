@@ -4,7 +4,7 @@
       <p class="text-end"><i class="fas fa-ellipsis-h fa-lg"></i></p>
       <p>{{ review.message }}</p>
     </div>
-    <div class="actions px-3 py-2 d-flex flex-row justify-content-between">
+    <div class="actions px-3 py-2 d-flex flex-row justify-content-between border-bottom border-dark">
       <div class="d-flex flex-row align-items-center">
           <div class="me-2">
               <img v-if="review.avatar" :src="review.avatar" :alt="review.username" />
@@ -26,6 +26,21 @@
             <ClapperBoard class="me-2" />
             <p class="fw-bold mb-0 fs-5">{{review.stars}}/5</p>
         </div>
+    </div>
+    <div v-if="review.replies.length>0" class="p-4 reply-container">
+      <div v-for="reply in review.replies" class="d-flex flex-row mb-4">
+        <div class="me-2">
+          <img v-if="reply.avatar" :src="reply.avatar" :alt="reply.username" />
+          <i
+            v-else
+            class="p-2 fas fa-user fa-2x bg-secondary text-white rounded-circle"
+          ></i>
+          </div>
+          <div class="container-fluid border rounded p-2 d-flex flex-column">
+            <i class="action">{{reply.username}}</i>
+            <p>{{reply.message}}</p>
+          </div>
+      </div>
     </div>
     <div v-if="user" class="px-3 py-2 d-flex flex-row  border-top border-dark">
       <div>
@@ -49,7 +64,7 @@ const { review } = defineProps({
   },
 });
 
-const id = ref(`review-comment-${review.id}`);
+const id = ref(`review-comment-${review.ratingId}`);
 
 const auth = useAuthStore();
 
@@ -61,6 +76,8 @@ const setCommentFocus = ()=>{
   const textarea = document.getElementById(id);
   textarea.focus();
 }
+
+
 
 </script>
 
@@ -75,6 +92,10 @@ svg{
 }
 .highlight{
   color: var(--cf-highlight)
+}
+
+.reply-container{
+  min-height: 150px;
 }
 
 </style>
