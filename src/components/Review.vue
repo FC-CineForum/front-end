@@ -95,7 +95,8 @@ svg{
 }
 
 .reply-container{
-  min-height: 150px;
+  height: 200px;
+  overflow: scroll;
 }
 
 </style>
