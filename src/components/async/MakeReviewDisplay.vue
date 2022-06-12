@@ -8,11 +8,15 @@
                 <div class="d-flex flex-row justify-content-between">
                     <h1 class="h1"><span class="fw-bold">{{data.entry.title}}</span> <span class="fw-light">({{data.entry.release}})</span></h1>
                 </div>
+                <div class="h3 d-flex flex-row align-items-center">
+                  <p class="m-0 me-2">Calificación:</p>
+                  <CustomInput class="p-0" type="number" v-model:value="stars" min="1" max="5" />
+                </div>
             </div>
       </div>
       <div class="mx-5 mt-5">
         <h1>Reseña</h1>
-        <CustomTextArea class="border border-dark container-fluid" placeholder="Titulo de la reseña" v-model:value="review" />
+        <CustomTextArea class="border border-dark container-fluid" placeholder="Cuentanos la razón de tu calificación si así lo deseas" v-model:value="review" />
       </div>
     </div>
 </template>
@@ -22,11 +26,13 @@ import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import services from "@/services/entry.js";
 import CustomTextArea from '../forms/TextArea.vue';
-
+import CustomInput from '../forms/Input.vue';
 
 const router = useRouter();
 
 const route = useRoute();
+
+const stars = ref(0);
 
 const fetchData = async () => {
   try{
