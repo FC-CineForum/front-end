@@ -80,14 +80,13 @@ const setCommentFocus = ()=>{
 }
 
 const submitReply = async (event)=>{
-  if(event.keyCode === 13 && reply.value.length>0){
+  if(event.keyCode === 13 && reply.value.replaceAll(' ', '').replaceAll(/(\r\n|\n|\r)/gm, "").length>0){
     event.preventDefault();
     event.stopPropagation();
     const replyInfo = {
       message: reply.value,
       username: auth.user.username,
     }
-    console.log(auth.user.username, reply.value);
     try {
       await services.addReply(review.ratingId, replyInfo);
       reply.value = "";
