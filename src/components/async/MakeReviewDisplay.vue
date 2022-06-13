@@ -18,13 +18,18 @@
         <h1>Reseña</h1>
         <CustomTextArea class="border border-dark container-fluid" placeholder="Cuentanos la razón de tu calificación si así lo deseas" v-model:value="review" />
       </div>
+      <div class="mt-5 container-fluid d-flex justify-content-center align-items-center">
+        <button class="btn btn-primary fw-bold fs-4" @click="submitRating">Publicar</button>
+      </div>
     </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import services from "@/services/entry.js";
+import entryServices from "@/services/entry.js";
+import { useAuthStore } from "@/stores/auth.js";
+import userServices from "@/services/user.js";
 import CustomTextArea from '../forms/TextArea.vue';
 import CustomInput from '../forms/Input.vue';
 
@@ -32,11 +37,15 @@ const router = useRouter();
 
 const route = useRoute();
 
-const stars = ref(0);
+const auth = useAuthStore();
+
+const stars = ref(1);
+
+const review = ref("");
 
 const fetchData = async () => {
   try{
-    const data = await services.getEntryById(route.params.id);
+    const data = await entryServices.getEntryById(route.params.id);
     return data;
   }catch(e){
     alert(e)
@@ -44,9 +53,22 @@ const fetchData = async () => {
   }
 }
 
+const submitRating = async () => {
+  try{
+    await userServices.addRating(route.params.id,{
+      stars: stars.value,
+      message: review.value,
+      username: auth.user.username
+    });
+    router.push({name: 'EntryReview', params: {id: route.params.id}});
+  }catch(e){
+    alert(e)
+  }
+}
+
 const data = await fetchData();
 
-const review = ref("")
+
 
 </script>
 
@@ -58,6 +80,10 @@ h1 {
 img {
   width: 100%;
   height: auto;
+}
+
+button{
+  background: var(--cf-main);
 }
 
 

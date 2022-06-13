@@ -39,5 +39,20 @@ export default {
             }
             throw new Error("Ha ocurrido un error, intentelo más tarde");
         }
+    },
+    async addRating(entryId,rating){
+        try{
+            await apiClient.post(`/cineforum/rating/${entryId}`,rating);
+        }catch(err){
+            //Probably a 500
+            if(!err.data){
+                throw new Error("Hubo un error, intentelo más tarde");
+            }
+            // Bad Request
+            if(err.status === 400){
+                throw new Error("Falta la calificación");
+            }
+            throw new Error("Ha ocurrido un error, intentelo más tarde");
+        }
     }
 }
