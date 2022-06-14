@@ -33,7 +33,7 @@ const routes = [
   {
     path: "/admin",
     component: () => import("../views/admin/Layout.vue"),
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: false },
     children:adminRoutes
   }
 ];
