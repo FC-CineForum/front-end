@@ -75,7 +75,7 @@ const { user } = storeToRefs(auth);
 const reply = ref("")
 
 const setCommentFocus = ()=>{
-  const textarea = document.getElementById(id);
+  const textarea = document.getElementById(id.value);
   textarea.focus();
 }
 
