@@ -1,15 +1,12 @@
-<template>
-<div>
-    <!--
-    <a class="opciones">Título &nbsp 
-    <input class="campo" placeholder="Título a modificar..."/>
-    </a>
-    <br>
-    <input type="submit" class="opciones" value="Título"> &nbsp
+<script setup>
+import Header from "@/components/Header.vue";
+</script>
 
-    -->
-    <input class="campo" placeholder="Título a modificar..."/>
-</div>
+<template>
+  <Header/>
+  <div>
+      <input class="campo" placeholder="Título a modificar..."/>
+  </div>
 </template>
 
 <style>
