@@ -1,19 +1,29 @@
-<script setup>
-import { reactive } from "vue";
-import Entry from "../../components/Entry.vue";
-import Header from "@/components/Header.vue";
-const movie = reactive({
-  title: "The Batman",
-  rating: 4.2,
-  poster:
-    "https://static.posters.cz/image/1300/posters/the-batman-2022-i122127.jpg",
-});
-</script>
-
 <template>
   <Header />
-  <h1>Nuevas Entradas</h1>
-  <div class="container-fluid d-flex flex-row justify-start">
-    <Entry :movie="movie" />
-  </div>
+  <Suspense>
+    <template #default>
+      <Display />
+    </template>
+    <template #fallback>
+      <div
+        class="d-flex justify-content-center align-items-center"
+        style="min-height: 90vh"
+      >
+        <div
+          class="spinner-border mt-3"
+          style="width: 4rem; height: 4rem"
+          role="status"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </template>
+  </Suspense>
 </template>
+
+<script setup>
+import Entry from "@/components/Entry.vue";
+import Header from "@/components/Header.vue";
+import Display from "@/components/async/DashboardDisplay.vue";
+
+</script>
