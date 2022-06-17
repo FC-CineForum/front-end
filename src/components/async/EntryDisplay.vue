@@ -51,12 +51,17 @@
         {{data.entry.synopsis}}
       </p>
     </div>
-    <div v-if="data.ratings.length > 0" class="col-12 col-md-10 mb-5">
+    <div  class="col-12 col-md-10 mb-5">
+        <div v-if="data.ratings.length > 0">
         <h4 class="fw-bold">Opiniones de usuarios</h4>
         <Review :review="data.ratings[0]" />
         <div class="mt-4 d-flex flex-row align-items-center action pointer">
           <h4 class="m-0 me-2 fw-bold"><router-link :to="{name:'EntryReview',param:{id:route.params.id}}" >Ver más <i class="fas fa-chevron-right fa-lg"></i></router-link></h4>
         </div>
+    </div>
+     <div v-else class="mt-4 d-flex flex-row align-items-center action pointer">
+          <h4 class="m-0 me-2 fw-bold"><router-link :to="{name:'EntryReview',param:{id:route.params.id}}" >Crea la primer reseña <i class="fas fa-chevron-right fa-lg"></i></router-link></h4>
+      </div>
     </div>
   </div>
 </template>
