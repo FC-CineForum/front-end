@@ -54,5 +54,35 @@ export default {
             }
             throw new Error("Ha ocurrido un error, intentelo más tarde");
         }
+    },
+    async addLike(raitingId,like){
+        try {
+            await apiClient.post(`/cineforum/like/${raitingId}`,like);
+        } catch (error) {
+            if (!error.data) {
+                throw new Error("Hubo un error, intentelo más tarde");
+            }
+            // Bad Request
+            if(err.status === 400){
+                throw new Error("Falta la calificación");
+            }
+            throw new Error("Ha ocurrido un error, intentelo más tarde");
+        }
+    },
+    async getLike(raitingId, username){
+        try {
+            const { data } = await apiClient.get(`/cineforum/like/${raitingId}/${username}`);
+            return data;
+        } catch (error) {
+            if (!error.data) {
+                throw new Error("Hubo un error, intentelo más tarde");
+            }
+            // Bad Request
+            if(err.status === 400){
+                throw new Error("Falta un elemento");
+            }
+            throw new Error("Ha ocurrido un error, intentelo más tarde");
+        }
     }
+
 }

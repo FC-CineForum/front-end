@@ -20,9 +20,18 @@
             <p v-if="user" class="mb-0 action pointer" @click="setCommentFocus">Comentar</p>
         </div>
         <div class="d-flex flex-row align-items-center">
-            <div v-if="user" >
-              <i class="far fa-thumbs-up fa-2x me-3 action pointer"></i>
-              <i class="far fa-thumbs-down fa-2x reflection highlight me-3 pointer"></i></div> 
+            <div v-if="user">
+              <div v-if="!interactionGiven.value">
+                  <i class="far fa-thumbs-up fa-2x me-3 action pointer"></i>
+                   <i class="far fa-thumbs-down fa-2x reflection highlight me-3 pointer"></i>
+              </div>
+              <div v-else-if="interactionGiven.type === 'like' ">
+                  <i class="fas fa-thumbs-up fa-2x me-3 action pointer"></i>
+              </div>
+              <div v-else>
+                   <i class="fas fa-thumbs-down fa-2x me-3 reflection highlight pointer"></i>
+              </div>
+            </div> 
             <ClapperBoard class="me-2" />
             <p class="fw-bold mb-0 fs-5">{{review.stars}}/5</p>
         </div>
@@ -56,7 +65,7 @@ import ClapperBoard from "@/components/icons/solids/ClapperBoard.vue";
 import CustomTextArea from "@/components/forms/TextArea.vue";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/auth.js";
-import { ref } from "vue";
+import { onBeforeMount, reactive, ref } from "vue";
 import services from "@/services/user.js";
 
 const { review } = defineProps({
@@ -73,6 +82,21 @@ const auth = useAuthStore();
 const { user } = storeToRefs(auth);
 
 const reply = ref("")
+
+const interactionGiven = reactive({
+  value: false,
+  type: "",
+});
+
+onBeforeMount(async ()=>{
+ if(auth.user){
+    const data = await services.getLike(review.ratingId, auth.user.username);
+    interactionGiven.value = data.message;
+    if(data.message){
+      interactionGiven.type = data.isLike ? "like" : "dislike";
+    }
+ }
+});
 
 const setCommentFocus = ()=>{
   const textarea = document.getElementById(id.value);
