@@ -20,9 +20,18 @@
             <p v-if="user" class="mb-0 action pointer" @click="setCommentFocus">Comentar</p>
         </div>
         <div class="d-flex flex-row align-items-center">
-            <div v-if="user" >
-              <i class="far fa-thumbs-up fa-2x me-3 action pointer"></i>
-              <i class="far fa-thumbs-down fa-2x reflection highlight me-3 pointer"></i></div> 
+            <div v-if="user">
+              <div v-if="!interactionGiven.value">
+                  <i @click="submitInteraction(true)" class="far fa-thumbs-up fa-2x me-3 action pointer"></i>
+                   <i @click="submitInteraction(false)" class="far fa-thumbs-down fa-2x reflection highlight me-3 pointer"></i>
+              </div>
+              <div v-else-if="interactionGiven.type === 'like' ">
+                  <i @click="deleteInteraction" class="fas fa-thumbs-up fa-2x me-3 action pointer"></i>
+              </div>
+              <div v-else>
+                   <i @click="deleteInteraction" class="fas fa-thumbs-down fa-2x me-3 reflection highlight pointer"></i>
+              </div>
+            </div> 
             <ClapperBoard class="me-2" />
             <p class="fw-bold mb-0 fs-5">{{review.stars}}/5</p>
         </div>
@@ -56,7 +65,7 @@ import ClapperBoard from "@/components/icons/solids/ClapperBoard.vue";
 import CustomTextArea from "@/components/forms/TextArea.vue";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/auth.js";
-import { ref } from "vue";
+import { onBeforeMount, reactive, ref } from "vue";
 import services from "@/services/user.js";
 
 const { review } = defineProps({
@@ -74,20 +83,34 @@ const { user } = storeToRefs(auth);
 
 const reply = ref("")
 
+const interactionGiven = reactive({
+  value: false,
+  type: "",
+});
+
+onBeforeMount(async ()=>{
+ if(auth.user){
+    const data = await services.getLike(review.ratingId, auth.user.username);
+    interactionGiven.value = data.message === 'missing interaction' ? false : true;
+    if (interactionGiven.value) {
+      interactionGiven.type = data.message.includes('true') ? "like" : "dislike";
+    }
+ }
+});
+
 const setCommentFocus = ()=>{
-  const textarea = document.getElementById(id);
+  const textarea = document.getElementById(id.value);
   textarea.focus();
 }
 
 const submitReply = async (event)=>{
-  if(event.keyCode === 13 && reply.value.length>0){
+  if(event.keyCode === 13 && reply.value.replaceAll(' ', '').replaceAll(/(\r\n|\n|\r)/gm, "").length>0){
     event.preventDefault();
     event.stopPropagation();
     const replyInfo = {
       message: reply.value,
       username: auth.user.username,
     }
-    console.log(auth.user.username, reply.value);
     try {
       await services.addReply(review.ratingId, replyInfo);
       reply.value = "";
@@ -99,6 +122,30 @@ const submitReply = async (event)=>{
   }
 }
 
+const submitInteraction = async (type)=>{
+  if(!interactionGiven.value){
+    try {
+      await services.addInteraction(review.ratingId,{username: auth.user.username, isLike: type});
+      interactionGiven.value = true;
+      interactionGiven.type = type? "like" : "dislike";
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+}
+
+
+const deleteInteraction = async ()=>{
+  if(interactionGiven.value){
+    try {
+      await services.deleteInteraction(review.ratingId,{username: auth.user.username});
+      interactionGiven.value = false;
+      interactionGiven.type = "";
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+}
 
 
 </script>
