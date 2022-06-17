@@ -1,0 +1,15 @@
+# Node
+node_modules
+dist
+
+# IDE config
+.vs_code
+
+# Env files
+.env.development
+.env
+
+# Git
+.git
+.gitignore
+
