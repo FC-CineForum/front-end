@@ -22,14 +22,14 @@
         <div class="d-flex flex-row align-items-center">
             <div v-if="user">
               <div v-if="!interactionGiven.value">
-                  <i class="far fa-thumbs-up fa-2x me-3 action pointer"></i>
-                   <i class="far fa-thumbs-down fa-2x reflection highlight me-3 pointer"></i>
+                  <i @click="submitInteraction(true)" class="far fa-thumbs-up fa-2x me-3 action pointer"></i>
+                   <i @click="submitInteraction(false)" class="far fa-thumbs-down fa-2x reflection highlight me-3 pointer"></i>
               </div>
               <div v-else-if="interactionGiven.type === 'like' ">
-                  <i class="fas fa-thumbs-up fa-2x me-3 action pointer"></i>
+                  <i @click="deleteInteraction" class="fas fa-thumbs-up fa-2x me-3 action pointer"></i>
               </div>
               <div v-else>
-                   <i class="fas fa-thumbs-down fa-2x me-3 reflection highlight pointer"></i>
+                   <i @click="deleteInteraction" class="fas fa-thumbs-down fa-2x me-3 reflection highlight pointer"></i>
               </div>
             </div> 
             <ClapperBoard class="me-2" />
@@ -91,9 +91,9 @@ const interactionGiven = reactive({
 onBeforeMount(async ()=>{
  if(auth.user){
     const data = await services.getLike(review.ratingId, auth.user.username);
-    interactionGiven.value = data.message;
-    if(data.message){
-      interactionGiven.type = data.isLike ? "like" : "dislike";
+    interactionGiven.value = data.message === 'missing interaction' ? false : true;
+    if (interactionGiven.value) {
+      interactionGiven.type = data.message.includes('true') ? "like" : "dislike";
     }
  }
 });
@@ -122,6 +122,30 @@ const submitReply = async (event)=>{
   }
 }
 
+const submitInteraction = async (type)=>{
+  if(!interactionGiven.value){
+    try {
+      await services.addInteraction(review.ratingId,{username: auth.user.username, isLike: type});
+      interactionGiven.value = true;
+      interactionGiven.type = type? "like" : "dislike";
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+}
+
+
+const deleteInteraction = async ()=>{
+  if(interactionGiven.value){
+    try {
+      await services.deleteInteraction(review.ratingId,{username: auth.user.username});
+      interactionGiven.value = false;
+      interactionGiven.type = "";
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+}
 
 
 </script>

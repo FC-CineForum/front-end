@@ -55,9 +55,9 @@ export default {
             throw new Error("Ha ocurrido un error, intentelo más tarde");
         }
     },
-    async addLike(raitingId,like){
+    async addInteraction(ratingId,like){
         try {
-            await apiClient.post(`/cineforum/like/${raitingId}`,like);
+            await apiClient.post(`/cineforum/interaction/${ratingId}`,like);
         } catch (error) {
             if (!error.data) {
                 throw new Error("Hubo un error, intentelo más tarde");
@@ -69,9 +69,9 @@ export default {
             throw new Error("Ha ocurrido un error, intentelo más tarde");
         }
     },
-    async getLike(raitingId, username){
+    async getLike(ratingId, username){
         try {
-            const { data } = await apiClient.get(`/cineforum/like/${raitingId}/${username}`);
+            const { data } = await apiClient.get(`/cineforum/like/${ratingId}/${username}`);
             return data;
         } catch (error) {
             if (!error.data) {
@@ -79,6 +79,21 @@ export default {
             }
             // Bad Request
             if(err.status === 400){
+                throw new Error("Falta un elemento");
+            }
+            throw new Error("Ha ocurrido un error, intentelo más tarde");
+        }
+    },
+
+    async deleteInteraction(ratingId,user){
+        try {
+            await apiClient.delete(`/cineforum/interaction/${ratingId}`,{ data: {...user}});
+        } catch (error) {
+            if (!error.data) {
+                throw new Error("Hubo un error, intentelo más tarde");
+            }
+            // Bad Request
+            if(error.status === 400){
                 throw new Error("Falta un elemento");
             }
             throw new Error("Ha ocurrido un error, intentelo más tarde");
