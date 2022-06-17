@@ -1,52 +1,178 @@
 <script setup>
 import Header from "@/components/Header.vue";
+import { ref, computed, reactive } from "vue";
+import useValidate from "@vuelidate/core";
+import { required, url, minLength, maxLength, integer } from "@vuelidate/validators";
+import CustomInput from "../../components/forms/Input.vue";
+import CustomButton from "../../components/forms/Button.vue";
+
+const mine = async () => {
+  alert('Esto debería minar!')
+  await vMine$.value.$validate();
+  if (vMine$.value.$error) {
+    alert("Debe ser un url de IMDB!");
+    return;
+  }
+  try {
+    alert('Está minando!')
+  } catch (err) {
+    alert(err);
+  }
+};
+
+const add = async () => {
+  alert('Esto debería agregar una película!')
+  await vAdd$.value.$validate();
+  if (vAdd$.value.$error) {
+    alert("Deben ser válidos todos los campos!");
+    return;
+  }
+  try {
+    alert('Se agregó la película!')
+  } catch (err) {
+    alert(err);
+  }
+};
+
+const mineState = reactive({
+  url: '',
+});
+
+const addState = reactive({
+  title: '',
+  synopsis: '',
+  image: '',
+  releaseDate: '',
+  classification: '',
+  trailer: '',
+  duration: ''
+});
+
+const mineRules = computed(() => {
+  return {
+    url: { required , url }
+  };
+});
+
+const addRules = computed(() => {
+  return {
+    title: { required },
+    synopsis: { required },
+    image: { required , url },
+    releaseDate: { required , integer, minLength: minLength(4), maxLength: maxLength(4) },
+    classification: { required },
+    trailer: { required , url },
+    duration: { required , integer , maxLength: maxLength(10)}
+  };
+});
+
+const vMine$ = useValidate(mineRules, mineState);
+const vAdd$ = useValidate(addRules, addState);
+
 </script>
 
 <template>
 <Header/>
 <div class="fields">
 <div>
-    <form action="">
-<!--        <label for="link-imdb">Minar de iMdb &nbsp</label> -->
-        <br>
-        <label for="title" class="tag">Minar de IMDB</label>&nbsp
-        <input class="campo" placeholder="URL de IMDB"/>
-        <br>
-        <input type="submit" class="sbmt" value="Minar"/>
-    </form>
+    <h1>Minar de IMDB</h1>
+    <br>
+    <br>
+    <label for="title" class="tag">Minar de IMDB</label>&nbsp
+    <CustomInput 
+      v-model:value="mineState.url"
+      placeholder="URL de IMDB"
+    />
+    <p v-if="vMine$.url.$error" class="text-danger text-center">
+      Asegúrate de que el URL sea válido.
+    </p>
+    <br>
+    <br>
+    <CustomButton class="rounded fw-bold fs-3" @click="mine">
+        Minar
+    </CustomButton>
+    <br>
+    <br>
+    <br>
+    <br>
 </div>
 <div>
-    <form action="">
-        <label for="title" class="tag">Título</label>&nbsp
-        <input class="campo" placeholder="Título de la película"/>
-        <br>
-        <br>
-        <label for="title" class="tag">Sinopsis</label>&nbsp
-        <input class="campo" placeholder="Sinópsis" type='text-area'/>
-        <br>
-        <br>
-        <label for="title" class="tag">Imagen</label>&nbsp
-        <input class="campo" placeholder="Imágen"/>
-        <br>
-        <br>
-        <label for="title" class="tag">Año Lanzamiento</label>&nbsp
-        <input class="campo" placeholder="Release"/>
-        <br>
-        <br>
-        <label for="title" class="tag">Clasificación</label>&nbsp
-        <input class="campo" placeholder="Classificación"/>
-        <br>
-        <br>
-        <label for="title" class="tag">Tráiler</label>&nbsp
-        <input class="campo" placeholder="Trailer"/>
-        <br>
-        <br>
-        <label for="title" class="tag">Duración</label>&nbsp
-        <input class="campo" placeholder="Duración"/>
-        <br>
-        <br>
-        <input type="submit" class="sbmt" value="Añadir">
-    </form>
+  <h1>Agregar Manualmente</h1>
+  <br>
+  <br>
+  <label for="title" class="tag">Título</label>&nbsp
+  <CustomInput 
+    v-model:value="addState.title"
+    placeholder="Título de la Película"
+  />
+  <p v-if="vAdd$.title.$error" class="text-danger text-center">
+    La película debe tener un título.
+  </p>
+  <br>
+  <br>
+  <label for="title" class="tag">Sinopsis</label>&nbsp
+  <CustomInput 
+    v-model:value="addState.synopsis"
+    placeholder="Sinopsis"
+  />
+  <p v-if="vAdd$.synopsis.$error" class="text-danger text-center">
+    La película debe tener una sinopsis.
+  </p>
+  <br>
+  <br>
+  <label for="title" class="tag">Imagen</label>&nbsp
+  <CustomInput 
+    v-model:value="addState.image"
+    placeholder="Imagen"
+  />
+  <p v-if="vAdd$.image.$error" class="text-danger text-center">
+    Debe ser un url de imagen válido.
+  </p>
+  <br>
+  <br>
+  <label for="title" class="tag">Año Lanzamiento</label>&nbsp
+  <CustomInput 
+    v-model:value="addState.releaseDate"
+    placeholder="Año de Lanzamiento"
+  />
+  <p v-if="vAdd$.releaseDate.$error" class="text-danger text-center">
+    Debe ser un año de cuatro dígitos.
+  </p>
+  <br>
+  <br>
+  <label for="title" class="tag">Clasificación</label>&nbsp
+  <CustomInput 
+    v-model:value="addState.classification"
+    placeholder="Classificación"
+  />
+  <p v-if="vAdd$.classification.$error" class="text-danger text-center">
+    Debe ser una clasificación válida.
+  </p>
+  <br>
+  <br>
+  <label for="title" class="tag">Tráiler</label>&nbsp
+  <CustomInput 
+    v-model:value="addState.trailer"
+    placeholder="Tráiler"
+  />
+  <p v-if="vAdd$.trailer.$error" class="text-danger text-center">
+    Debe ser un url del tráiler válido.
+  </p>
+  <br>
+  <br>
+  <label for="title" class="tag">Duración</label>&nbsp
+  <CustomInput 
+    v-model:value="addState.duration"
+    placeholder="Duración"
+  />
+  <p v-if="vAdd$.duration.$error" class="text-danger text-center">
+    Debe ser un entero con el total de minutos.
+  </p>
+  <br>
+  <br>
+  <CustomButton class="rounded fw-bold fs-3" @click="add">
+      Agregar
+  </CustomButton>
 </div>
 </div>
 </template>
@@ -102,7 +228,7 @@ import Header from "@/components/Header.vue";
   .tag {
       background-color: #083F6D;
       color: rgb(255, 255, 255);
-      width: 6cm;
+      width: 5cm;
       height: 1cm;
       font-size: 0.6cm;
       border-width: 0.3cm;
@@ -112,6 +238,7 @@ import Header from "@/components/Header.vue";
 
   .fields {
       text-align: center;
+      background-color: rgb(140, 190, 202);;
   }
 }
 </style>

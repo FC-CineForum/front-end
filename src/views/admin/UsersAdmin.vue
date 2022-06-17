@@ -1,22 +1,98 @@
 <script setup>
 import Header from "@/components/Header.vue";
+import { ref, computed, reactive } from "vue";
+import useValidate from "@vuelidate/core";
+import { required, minLength, maxLength } from "@vuelidate/validators";
+import CustomInput from "../../components/forms/Input.vue";
+import CustomButton from "../../components/forms/Button.vue";
+
+const deleteUser = async () => {
+  alert('Esto debería eliminar al usuario!')
+  await v$.value.$validate();
+  if (v$.value.$error) {
+    alert("Debe ser un usuario válido!");
+    return;
+  }
+  try {
+    alert('Usuario eliminado!')
+  } catch (err) {
+    alert(err);
+  }
+};
+
+const makeAdmin = async () => {
+  alert('Esto debe hacer admin al usuario')
+  await v$.value.$validate();
+  if (v$.value.$error)
+    alert('Debe ser un usuario válido!');
+  else
+    try {
+      alert('El usuario ahora es admin!');
+    } catch (err) {
+      alert(err)
+    }
+};
+
+const removeAdmin = async () => {
+  alert('Esto debe quitar la administración a un usuario')
+  await v$.value.$validate();
+  if (v$.value.$error)
+    alert('Debe ser un usuario válido!');
+  else
+    try {
+      alert('El usuario ya no es admin!');
+    } catch (err) {
+      alert(err)
+    }
+};
+
+const state = reactive({
+  user: ''
+});
+
+const rules = computed(() => {
+  return {
+    user: { required, minLength: minLength(8), maxLength: maxLength(25)}
+  };
+});
+
+const v$ = useValidate(rules, state);
+
 </script>
 
 <template>
 <Header/>
 <div class="fields">
-    <form action="">
-        <br>
-        <label for="title" class="tag">Username</label>&nbsp
-        <input class="campo" placeholder="Username"/>
-        <br>
-        <br>
-        <input type="submit" class="sbmt" value="Eliminar"/>&nbsp
-        <input type="submit" class="sbmt" value="Admin"/>
-        <br>
-        <br>
-    </form>
+<div>
+  <h1>Administrador de Usuarios</h1>
+  <br>
+  <br>
+  <label for="title" class="tag">Usuario</label>&nbsp
+  <CustomInput
+    class="campo"
+    v-model:value="state.user"
+    placeholder="Nombre de Usuario"
+  />
+  <p v-if="v$.user.$error" class="text-danger text-center">
+    Asegúrate de que sea un usuario válido.
+  </p>
+  <br>
+  <br>
+  <CustomButton class="rounded fw-bold fs-3" @click="deleteUser">
+    Eliminar
+  </CustomButton>
+  &nbsp  
+  <CustomButton class="rounded fw-bold fs-3" @click="makeAdmin">
+    Hacer Admin
+  </CustomButton>
+  &nbsp  
+  <CustomButton class="rounded fw-bold fs-3" @click="removeAdmin">
+    Quitar Admin
+  </CustomButton>
 </div>
+</div>
+
+
 </template>
 
 <style>
@@ -57,7 +133,7 @@ import Header from "@/components/Header.vue";
   }
 
   .campo{
-      background-color: #a4c1dde4;
+      background-color: #e6f3ffe4;
       color: rgb(2, 1, 1);
       width: 8cm;
       height: 2cm;
