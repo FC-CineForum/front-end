@@ -68,7 +68,7 @@ export default{
       }
     }
   },
-  async  deleteEntryById(id){
+  async deleteEntryById(id){
     try{
       await apiClient.delete(`/cineforum/entry/${id}`);
     }catch(err){
@@ -77,5 +77,12 @@ export default{
         throw new Error("Hubo un error, intentelo más tarde");
       }
     }
-  }
+  }//,
+  // async mine(url) {
+  //   try {
+  //     await apiClient.post(`/cineforum/miner`, url);
+  //   } catch (err) {
+  //     alert(err)
+  //   }
+  // } 
 }

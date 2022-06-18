@@ -98,6 +98,46 @@ export default {
             }
             throw new Error("Ha ocurrido un error, intentelo más tarde");
         }
-    }
+    }/**,
 
+    async deleteUser(username) {
+        try {
+            await apiClient.delete(`/cineforum/users/${username}`)
+        } catch (err) {
+            throw new Error("Hubo un error, inténtalo más tarde")
+        }
+    },
+
+    async makeAdmin(username) {
+        try {
+            await apiClient.post(`/cineforum/users/${username}`, true);
+        } catch (err) {
+            throw new Error("Hubo un error, inténtalo más tarde")
+        }
+    },
+
+    async removeAdmin(username) {
+        try {
+            await apiClient.post(`/cineforum/users/${username}`, false);
+        } catch (err) {
+            throw new Error("Hubo un error, inténtalo más tarde")
+        }
+    },
+
+    async deleteValoration(idValoration) {
+        try {
+            await apiClient.delete(`/cineforum/rating/${idValoration}`)
+        } catch (err) {
+            throw new Error("Hubo un error, inténtalo más tarde")
+        }
+    },
+
+    async deleteComment(idComment) {
+        try {
+            await apiClient.delete(`/cineforum/reply/${idComment}`)
+        } catch (err) {
+            throw new Error("Hubo un error, inténtalo más tarde")
+        }
+    } */
+    
 }
