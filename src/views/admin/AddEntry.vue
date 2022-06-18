@@ -5,34 +5,10 @@ import useValidate from "@vuelidate/core";
 import { required, url, minLength, maxLength, integer } from "@vuelidate/validators";
 import CustomInput from "../../components/forms/Input.vue";
 import CustomButton from "../../components/forms/Button.vue";
+import entryServices from "../../services/entry.js";
+import { useRouter } from "vue-router";
 
-const mine = async () => {
-  alert('Esto debería minar!')
-  await vMine$.value.$validate();
-  if (vMine$.value.$error) {
-    alert("Debe ser un url de IMDB!");
-    return;
-  }
-  try {
-    alert('Está minando!')
-  } catch (err) {
-    alert(err);
-  }
-};
-
-const add = async () => {
-  alert('Esto debería agregar una película!')
-  await vAdd$.value.$validate();
-  if (vAdd$.value.$error) {
-    alert("Deben ser válidos todos los campos!");
-    return;
-  }
-  try {
-    alert('Se agregó la película!')
-  } catch (err) {
-    alert(err);
-  }
-};
+const router = useRouter();
 
 const mineState = reactive({
   url: '',
@@ -48,26 +24,75 @@ const addState = reactive({
   duration: ''
 });
 
+const imdbUrl = (value) => value.includes('https://www.imdb.com/title/');
+
 const mineRules = computed(() => {
   return {
-    url: { required , url }
+    url: { required , imdbUrl }
   };
 });
+
+const imgUrl = (value) => value.includes('.jpg') || value.includes('.png') || value.includes('.jpeg')
 
 const addRules = computed(() => {
   return {
     title: { required },
     synopsis: { required },
-    image: { required , url },
+    image: { required , imgUrl },
     releaseDate: { required , integer, minLength: minLength(4), maxLength: maxLength(4) },
     classification: { required },
-    trailer: { required , url },
+    trailer: { required , imgUrl },
     duration: { required , integer , maxLength: maxLength(10)}
+  };
+});
+
+const movie = computed(() => {
+  return {
+    title: addState.title,
+    synopsis: addState.synopsis,
+    image: addState.image,
+    release: addState.releaseDate,
+    classification: addState.classification,
+    type: 'm',
+    trailer: addState.trailer,
+    length: addState.duration
   };
 });
 
 const vMine$ = useValidate(mineRules, mineState);
 const vAdd$ = useValidate(addRules, addState);
+
+const mine = async () => {
+  alert('Esto debería minar!')
+  await vMine$.value.$validate();
+  if (vMine$.value.$error) {
+    alert("Debe ser un url de IMDB!");
+    return;
+  }
+  try {
+    alert('Está minando!')
+    //await entryServices.mine(mineState.url)
+  } catch (err) {
+    alert(err);
+    console.log(err);
+  }
+};
+
+const add = async () => {
+  alert('Esto debería agregar una película!')
+  await vAdd$.value.$validate();
+  if (vAdd$.value.$error) {
+    alert("Deben ser válidos todos los campos!");
+    return;
+  }
+  try {
+    alert('Se agregó la película!')
+    console.log(movie.value);
+    entryServices.addMovie(movie.value);
+  } catch (err) {
+    alert(err);
+  }
+};
 
 </script>
 

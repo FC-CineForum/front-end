@@ -5,6 +5,19 @@ import useValidate from "@vuelidate/core";
 import { required, minLength, maxLength } from "@vuelidate/validators";
 import CustomInput from "../../components/forms/Input.vue";
 import CustomButton from "../../components/forms/Button.vue";
+import userServices from '@/services/user.js'
+
+const state = reactive({
+  user: ''
+});
+
+const rules = computed(() => {
+  return {
+    user: { required, minLength: minLength(8), maxLength: maxLength(25)}
+  };
+});
+
+const v$ = useValidate(rules, state);
 
 const deleteUser = async () => {
   alert('Esto debería eliminar al usuario!')
@@ -14,6 +27,7 @@ const deleteUser = async () => {
     return;
   }
   try {
+//    userServices.deleteUser(state.user);
     alert('Usuario eliminado!')
   } catch (err) {
     alert(err);
@@ -27,6 +41,7 @@ const makeAdmin = async () => {
     alert('Debe ser un usuario válido!');
   else
     try {
+//      userServices.makeAdmin(state.user);
       alert('El usuario ahora es admin!');
     } catch (err) {
       alert(err)
@@ -40,23 +55,12 @@ const removeAdmin = async () => {
     alert('Debe ser un usuario válido!');
   else
     try {
+//      userServices.removeAdmin(state.user);
       alert('El usuario ya no es admin!');
     } catch (err) {
       alert(err)
     }
 };
-
-const state = reactive({
-  user: ''
-});
-
-const rules = computed(() => {
-  return {
-    user: { required, minLength: minLength(8), maxLength: maxLength(25)}
-  };
-});
-
-const v$ = useValidate(rules, state);
 
 </script>
 
@@ -93,8 +97,6 @@ const v$ = useValidate(rules, state);
   </CustomButton>
 </div>
 </div>
-
-
 </template>
 
 <style>

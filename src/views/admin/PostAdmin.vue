@@ -5,6 +5,7 @@ import useValidate from "@vuelidate/core";
 import { required, integer } from "@vuelidate/validators";
 import CustomInput from "../../components/forms/Input.vue";
 import CustomButton from "../../components/forms/Button.vue";
+import userServices from '@/services/user.js'
 
 const deleteValoration = async () => {
   alert('Esto debería eliminar la valoración!')
@@ -14,6 +15,7 @@ const deleteValoration = async () => {
     return;
   }
   try {
+//    userServices.deleteValoration(state.id);
     alert('Usuario eliminado!')
   } catch (err) {
     alert(err);
@@ -27,6 +29,7 @@ const deleteComment = async () => {
     alert('Debe ser un usuario válido!');
   else
     try {
+      //userServices.deleteComment(state.id);
       alert('El usuario ahora es admin!');
     } catch (err) {
       alert(err)
