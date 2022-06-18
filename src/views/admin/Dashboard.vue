@@ -30,6 +30,10 @@ import Header from "@/components/Header.vue";
     align-items: center;
   }
 
+  body {
+    background-color: #a4c1dde4;
+  }
+
   h1 {
       font-size: 1.5cm;
       color : #083F6D;
@@ -49,7 +53,6 @@ import Header from "@/components/Header.vue";
 
   .admin {
     text-align: center;
-    background-color: rgb(140, 190, 202);
   }
   
   .column {

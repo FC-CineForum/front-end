@@ -33,6 +33,10 @@ import Header from "@/components/Header.vue";
     align-items: center;
   }
 
+  body {
+    background-color: #a4c1dde4;
+  }
+
   h1 {
       font-size: 2cm;
       color : #083F6D;
@@ -57,7 +61,6 @@ import Header from "@/components/Header.vue";
       display: flexbox;
       justify-content: center;
       text-align: center;
-      background-color: rgb(140, 190, 202)
   }
 }
 </style>

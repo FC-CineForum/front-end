@@ -78,6 +78,8 @@ const v$ = useValidate(rules, state);
   </p>
   <br>
   <br>
+  <br>
+  <br>
   <CustomButton class="rounded fw-bold fs-3" @click="deleteUser">
     Eliminar
   </CustomButton>
@@ -101,6 +103,10 @@ const v$ = useValidate(rules, state);
     min-height: 100vh;
     display: flex;
     align-items: center;
+  }
+
+  body {
+    background-color: #a4c1dde4;
   }
 
   .sbmt {
@@ -155,7 +161,6 @@ const v$ = useValidate(rules, state);
   }
 
   .fields {
-      background-color: #a4c1dde4;
       text-align: center;
   }
 }
