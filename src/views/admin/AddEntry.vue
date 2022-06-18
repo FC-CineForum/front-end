@@ -185,6 +185,10 @@ const vAdd$ = useValidate(addRules, addState);
     align-items: center;
   }
 
+  body {
+    background-color: #a4c1dde4;
+  }
+
   .sbmt {
       background-color: #083F6D;
       color: white;
@@ -238,7 +242,6 @@ const vAdd$ = useValidate(addRules, addState);
 
   .fields {
       text-align: center;
-      background-color: rgb(140, 190, 202);;
   }
 }
 </style>

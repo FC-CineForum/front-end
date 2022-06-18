@@ -17,6 +17,10 @@ import Header from "@/components/Header.vue";
     align-items: center;
   }
 
+  body {
+    background-color: #a4c1dde4;
+  }
+
   h1 {
       font-size: 1.5cm;
       color : #083F6D;

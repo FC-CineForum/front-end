@@ -1,31 +1,109 @@
 <script setup>
 import Header from "@/components/Header.vue";
+import { ref, computed, reactive } from "vue";
+import useValidate from "@vuelidate/core";
+import { required, integer } from "@vuelidate/validators";
+import CustomInput from "../../components/forms/Input.vue";
+import CustomButton from "../../components/forms/Button.vue";
+
+const deleteValoration = async () => {
+  alert('Esto debería eliminar la valoración!')
+  await v$.value.$validate();
+  if (v$.value.$error) {
+    alert("Debe ser un usuario válido!");
+    return;
+  }
+  try {
+    alert('Usuario eliminado!')
+  } catch (err) {
+    alert(err);
+  }
+};
+
+const deleteComment = async () => {
+  alert('Esto debe hacer admin al usuario')
+  await v$.value.$validate();
+  if (v$.value.$error)
+    alert('Debe ser un usuario válido!');
+  else
+    try {
+      alert('El usuario ahora es admin!');
+    } catch (err) {
+      alert(err)
+    }
+};
+
+const valorationState = reactive({
+  id: ''
+});
+
+const commentState = reactive({
+  id: ''
+});
+
+const valorationRules = computed(() => {
+  return {
+    id: { required, integer }
+  };
+});
+
+const commentRules = computed(() => {
+  return {
+    id: { required, integer }
+  };
+});
+
+const vValoration$ = useValidate(valorationRules, valorationState);
+const vComment$ = useValidate(commentRules, commentState);
+
 </script>
 
 <template>
 <Header/>
 <div class="fields">
-    <form action="">
-        <br>
-        <label for="title" class="tag">id valoración</label>&nbsp
-        <input class="campo" placeholder="id valoracion"/>
-        <br>
-        <br>
-        <input type="submit" class="sbmt" value="Eliminar"/>&nbsp
-        <br>
-        <br>
-    </form>
-    <form action="">
-        <br>
-        <label for="title" class="tag">id comentario</label>&nbsp
-        <input class="campo" placeholder="id comentario"/>
-        <br>
-        <br>
-        <input type="submit" class="sbmt" value="Eliminar"/>&nbsp
-        <br>
-        <br>
-    </form>
+<div>
+  <h1>Eliminar Valoración</h1>
+  <br>
+  <br>
+  <label for="title" class="tag">ID de Valoración</label>&nbsp
+  <CustomInput
+    class="campo"
+    v-model:value="valorationState.id"
+    placeholder="ID de la Valoración"
+  />
+  <p v-if="vValoration$.id.$error" class="text-danger text-center">
+    Asegúrate de que sea un ID válido.
+  </p>
+  <br>
+  <br>
+  <CustomButton class="rounded fw-bold fs-3" @click="deleteValoration">
+    Eliminar
+  </CustomButton>
+  <br>
+  <br>
+  <br>
+  <br>
+  <h1>Eliminar Comentario</h1>
+  <br>
+  <br>
+  <label for="title" class="tag">ID de Comentario</label>&nbsp
+  <CustomInput
+    class="campo"
+    v-model:value="commentState.id"
+    placeholder="ID de el Comentario"
+  />
+  <p v-if="vComment$.id.$error" class="text-danger text-center">
+    Asegúrate de que sea un ID válido.
+  </p>
+  <br>
+  <br>
+  <CustomButton class="rounded fw-bold fs-3" @click="deleteComment">
+    Eliminar
+  </CustomButton>
 </div>
+</div>
+
+
 </template>
 
 <style>
@@ -34,6 +112,10 @@ import Header from "@/components/Header.vue";
     min-height: 100vh;
     display: flex;
     align-items: center;
+  }
+
+  body {
+    background-color: #a4c1dde4;
   }
 
   .sbmt {
@@ -66,7 +148,7 @@ import Header from "@/components/Header.vue";
   }
 
   .campo{
-      background-color: #a4c1dde4;
+      background-color: #e6f3ffe4;
       color: rgb(2, 1, 1);
       width: 8cm;
       height: 2cm;
@@ -79,7 +161,7 @@ import Header from "@/components/Header.vue";
   .tag {
       background-color: #083F6D;
       color: rgb(255, 255, 255);
-      width: 5cm;
+      width: 6cm;
       height: 1cm;
       font-size: 0.6cm;
       border-width: 0.3cm;
@@ -88,7 +170,6 @@ import Header from "@/components/Header.vue";
   }
 
   .fields {
-      background-color: #a4c1dde4;
       text-align: center;
   }
 }
