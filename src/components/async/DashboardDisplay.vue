@@ -21,7 +21,7 @@ const fetchDashboard = async () => {
         const data = await dashboard.fetchDashboard();
         return data;
     } catch (e) {
-        alert("Parece que algo ha salido mal, por favor visitenos más tarde");
+        alert(e);
     }
 };
 
