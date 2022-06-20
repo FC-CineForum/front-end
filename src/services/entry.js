@@ -77,5 +77,16 @@ export default{
         throw new Error("Hubo un error, intentelo más tarde");
       }
     }
+  }, 
+  async findentryByTitle(title){
+    try{
+      const { data } = await apiClient.get(`/cineforum/entry/find/`,{title});
+      return data;
+    }catch(err){
+      //Probably a 500
+      if(!err.data){
+        throw new Error("Hubo un error, intentelo más tarde");
+      }
+    }
   }
 }
