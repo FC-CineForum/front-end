@@ -20,7 +20,7 @@
         </template>
       <template v-slot:menu>
         <div class="mt-1 d-flex flex-column p-2 bg-white rounded-2 border border-dark"  style="min-width:120px">
-          <router-link to="/" class="border-bottom" style="color:var(--cf-main)">Perfil</router-link>
+          <router-link to="/profile" class="border-bottom" style="color:var(--cf-main)">Perfil</router-link>
           <span @click="auth.logOut" class="mt-1 text-danger pointer">Cerrar sesión</span>
         </div>
       </template>
