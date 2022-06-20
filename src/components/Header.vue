@@ -12,7 +12,6 @@
       </router-link>
     </div>
     <div class="d-flex flex-row align-items-center" v-if="user">
-      <i class="fas fa-bell fa-2x me-3"></i>
       <Dropdown>
         <template v-slot:toggle>
           <div class="user pointer">
