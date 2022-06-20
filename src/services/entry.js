@@ -78,11 +78,13 @@ export default{
       }
     }
   }, 
-  async findentryByTitle(title){
+  async findEntryByTitle(title){
     try{
-      const { data } = await apiClient.get(`/cineforum/entry/find/`,{title});
+      console.log(title);
+      const { data } = await apiClient.post(`/cineforum/find`,{data:{...title}});
       return data;
     }catch(err){
+      alert(err);
       //Probably a 500
       if(!err.data){
         throw new Error("Hubo un error, intentelo más tarde");

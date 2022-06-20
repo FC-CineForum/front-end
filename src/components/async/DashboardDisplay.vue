@@ -23,6 +23,7 @@ import { reactive, ref, watch } from 'vue';
 import Entry from "@/components/Entry.vue";
 import Input from "@/components/forms/Input.vue";
 import { useDashboardStore } from "@/stores/dashboard.js";
+import entryServices from "@/services/entry.js";
 
 const search = ref("");
 
@@ -35,26 +36,28 @@ watch(search,async (newQuestion) => {
     if(newQuestion.length  === 0){
         await fetchDashboard();
     }else{
-
+        const data = await entryServices.findEntryByTitle({name:newQuestion});
+        data.forEach(entry => {
+            entries.push(entry);
+        });
     }
 } )
 
 const fetchDashboard = async () => {
     entries.splice(0, entries.length);
+    let data;
     if(dashboard.entries.length >= 1){
-        dashboard.entries.forEach(entry => {
-            entries.push(entry);
-        });
+       data = dashboard.entries;
     }else{
         try {
-        const data = await dashboard.fetchDashboard();
-        data.forEach(entry => {
-            entries.push(entry);
-        });
+        data = await dashboard.fetchDashboard();
         }catch (e) {
             alert(e);
         }
     }
+    data.forEach(entry => {
+            entries.push(entry);
+        });
 };
 
  await fetchDashboard();
