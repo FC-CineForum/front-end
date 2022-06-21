@@ -7,8 +7,8 @@
       >
         <p class="text-end"><i class="fas fa-plus fa-lg"></i></p>
       </div>
-      <div class="d-flex flex-row justify-content-between p-3 content">
-        <router-link :to="{name:'Entry', params:{id:entry.id}}"><p class="fw-bold fs-5">{{ entry.title }}</p></router-link>
+      <div class="d-flex flex-row justify-content-between p-3 content text-break">
+        <router-link class="text-break" :to="{name:'Entry', params:{id:entry.id}}"><p class="fw-bold fs-5 text-break">{{ entry.title.length > 15? `${entry.title.substring(0,15)}...` : entry.title }}</p></router-link>
         <div class="d-flex flex-row alig-items-center">
           <ClapperBoard class="me-3" />
           <p v-if="entry.rating" class="fw-bold fs-5">{{ entry.rating }}</p>
@@ -51,7 +51,7 @@ svg {
 }
 .container {
   padding: 0;
-  height: 522px;
+  height: 550px;
   width: 350px;
   box-shadow: 7px 3px 3px rgba(0, 0, 0, 0.2);
 }
@@ -63,6 +63,7 @@ svg {
 }
 
 .content {
+  max-width: 100%;
   background-color: #f7f7f7;
 }
 </style>

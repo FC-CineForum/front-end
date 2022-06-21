@@ -26,8 +26,16 @@ export const useAuthStore = defineStore({
       if(this.user || !this.token){
         return;
       }
-      const {user} = await authServices.getUser(this.token);
-      this.user = user
+      try {
+        const {user} = await authServices.getUser(this.token);
+        this.user = user
+      } catch (error) {
+        if (error.message === "null has no properties") {
+          return "";
+        }
+        throw error;
+      }
+      
     },
     logOut(){
       this.user = "";
