@@ -103,7 +103,7 @@ const state = reactive({
 
 const birthDateFormatted = computed(() => {
   const info = state.birthDate.split("-");
-  return `${info[2]}/${info[1]}/${info[0]}`;
+  return `${info[1]}/${info[2]}/${info[0]}`;
 });
 
 const user = computed(() => {
