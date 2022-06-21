@@ -9,7 +9,10 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install -g npm@latest \
+ && npm install -g @vue/cli@4.5.15 \
+ && npm install vue-router@4 \
+ && npm install --silent
 
 COPY . .
 
@@ -20,7 +23,9 @@ FROM nginx:stable-alpine AS production-stage
 
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY nginx.conf /etc/nginx/conf.d
 
 ENV PORT 80
 
@@ -28,4 +33,5 @@ EXPOSE $PORT
 
 # CMD ["nginx", "-g", "daemon off;"]
 
-CMD sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
+CMD sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/conf.d/nginx.conf && nginx -g 'daemon off;'
+
