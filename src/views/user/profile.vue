@@ -27,7 +27,7 @@
                 <i  @click="showModal=true" class="fas fa-plus-circle fa-2x pointer"></i>
             </div> 
              <div class="mt-5 mb-5  overflow-auto" style="white-space: nowrap;">
-                <Playlist class="me-3 d-inline-block" v-for="playlist in playlists" :entry="playlist" />
+                <Playlist class="me-3 d-inline-block" v-for="playlist in playlists" :playlist="playlist" /> 
              </div>
         </div>
     </div>
@@ -40,7 +40,7 @@ import Modal from "@/components/utilities/Modal.vue";
 import CustomInput from "../../components/forms/Input.vue";
 import CustomTextArea from "../../components/forms/TextArea.vue";
 import Playlist from "../../components/Playlist.vue";
-import { reactive, ref } from "vue"
+import { onBeforeMount, reactive, ref } from "vue"
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/auth.js";
 import playlistServices from "@/services/playlist.js";
@@ -59,6 +59,12 @@ const listDescription = ref("");
 
 const playlists = reactive([])
 
+onBeforeMount(async () => {
+    const data = await playlistServices.getAllPlaylists(auth.user.username);
+    data.forEach(playlist => {
+        playlists.push(playlist);
+    });
+})
 
 
 </script>

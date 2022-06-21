@@ -5,10 +5,9 @@
         class="flex-grow-1 poster"
         :style="`background:url(${playlist.image})`"
       >
-        <p class="text-center">Sin entradas</p>
       </div>
       <div class="d-flex flex-row justify-content-between p-3 content text-break">
-        <router-link class="text-break" :to="{name:'Entry', params:{id:entry.id}}"><p class="fw-bold fs-5 text-break">{{ entry.title.length > 15? `${entry.title.substring(0,15)}...` : playlist.playlist }}</p></router-link>
+       <p class="fw-bold fs-5 text-break">{{ playlist.playlist.length > 15? `${playlist.playlist.substring(0,15)}...` : playlist.playlist }}</p>
       </div>
     </div>
   </div>

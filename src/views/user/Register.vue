@@ -103,6 +103,7 @@ const state = reactive({
 
 const birthDateFormatted = computed(() => {
   const info = state.birthDate.split("-");
+  console.log(info);
   return `${info[1]}/${info[2]}/${info[0]}`;
 });
 

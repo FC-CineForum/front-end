@@ -2,7 +2,7 @@
 import axios from 'redaxios';
 
 const apiClient = axios.create({
-    baseURL: process.env.VITE_API_URL,
+    baseURL:import.meta.env.VITE_API_URL,
     withCredentials: false, // This is the default
     headers: {
         Accept: "application/json",
@@ -48,6 +48,16 @@ export default {
             if(!error.data){
                 throw new Error("Hubo un error, intentelo más tarde");
             }
+        }
+    },
+
+    getPlaylistInfo: async (username,playlist)=>{
+        try {
+            const { data } = await apiClient.get(`/cineforum/playlist/${username}/${playlist}`);
+            return data
+        } catch (error) {
+            // Probably a 500
+            throw new Error("Ha ocurrido un error, intentelo más tarde");
         }
     }
 }
