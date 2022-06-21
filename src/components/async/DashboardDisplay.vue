@@ -11,7 +11,7 @@
                 </div>
             </div>
         </div>
-        <h1>Nuevas Entradas</h1>
+        <h1 v-if="!search">Nuevas Entradas</h1>
         <div class="mt-5 mb-5  overflow-auto" style="white-space: nowrap;">
             <Entry class="me-3 d-inline-block" v-for="entry in entries" :entry="entry" />
         </div>
