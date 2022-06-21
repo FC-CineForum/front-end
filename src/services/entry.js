@@ -80,8 +80,7 @@ export default{
   }, 
   async findEntryByTitle(title){
     try{
-      console.log(title);
-      const { data } = await apiClient.post(`/cineforum/find`,{data:{...title}});
+      const { data } = await apiClient.get(`/cineforum/find/?word=${title}`);
       return data;
     }catch(err){
       alert(err);

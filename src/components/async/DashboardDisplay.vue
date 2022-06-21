@@ -31,12 +31,12 @@ const dashboard = useDashboardStore();
 
 const entries = reactive([])
 
-watch(search,async (newQuestion) => {
-    entries.splice(0,entries.length)
-    if(newQuestion.length  === 0){
+watch(search,async (newSearch) => {
+    if(newSearch.length  === 0){
         await fetchDashboard();
     }else{
-        const data = await entryServices.findEntryByTitle({name:newQuestion});
+        const data = await entryServices.findEntryByTitle(newSearch);
+        entries.splice(0,entries.length)
         data.forEach(entry => {
             entries.push(entry);
         });
