@@ -35,6 +35,11 @@ const routes = [
     component: () => import("../views/admin/Layout.vue"),
     meta: { requiresAuth: true },
     children:adminRoutes
+  },
+  {
+    path: "/profile",
+    component: () => import("../views/user/Profile.vue"),
+    meta: { requiresAuth: true },
   }
 ];
 
