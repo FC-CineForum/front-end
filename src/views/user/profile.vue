@@ -26,8 +26,10 @@
                 <h1>Listas</h1>
                 <i  @click="showModal=true" class="fas fa-plus-circle fa-2x pointer"></i>
             </div> 
+             <div class="mt-5 mb-5  overflow-auto" style="white-space: nowrap;">
+                <Playlist class="me-3 d-inline-block" v-for="playlist in playlists" :entry="playlist" />
+             </div>
         </div>
-
     </div>
     
 </template>
@@ -37,9 +39,11 @@ import Header from "@/components/Header.vue";
 import Modal from "@/components/utilities/Modal.vue";
 import CustomInput from "../../components/forms/Input.vue";
 import CustomTextArea from "../../components/forms/TextArea.vue";
-import { ref } from "vue"
+import Playlist from "../../components/Playlist.vue";
+import { reactive, ref } from "vue"
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/auth.js";
+import playlistServices from "@/services/playlist.js";
 
 const auth = useAuthStore();
 
@@ -52,6 +56,9 @@ const listName = ref("");
 const isPublic = ref(false);
 
 const listDescription = ref("");
+
+const playlists = reactive([])
+
 
 
 </script>
